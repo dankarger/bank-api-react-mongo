@@ -3,12 +3,10 @@ require("dotenv").config();
 //
 const cors = require('cors');
 const path = require('path');
-
 //
-
 const app = express();
-
 const port = process.env.PORT || 5000;
+const userRouter = require('./routes/userRoutes')
 
 //
 const publicPath = path.join(__dirname, 'client/build');
@@ -17,6 +15,8 @@ app.use(express.static(publicPath));
 //
 
 app.use(express.json());
+
+
 
 app.get('/api/users', (req, res) => {
     try {
@@ -27,6 +27,8 @@ app.get('/api/users', (req, res) => {
 });
 
 //
+
+
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(publicPath, 'index.html'));
 });
