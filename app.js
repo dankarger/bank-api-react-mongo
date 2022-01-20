@@ -16,7 +16,7 @@ app.use(express.static(publicPath));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-app.use('/', userRoute)
+app.use('/api', userRoute)
 
 //
 // app.get('/api/users', (req, res) => {
