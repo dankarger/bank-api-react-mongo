@@ -7,7 +7,7 @@ function App() {
     console.log(process.env.NODE_ENV);
 
     const getReq = async () => {
-        const { data } = await myApi.get('/users');
+        const { data } = await myApi.get('/users/getUsers');
         console.log(data);
     };
     return (
