@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use('/api/users', userRoute)
-
+// app.use('/', go to react)
 })
 //
 // app.get('/api/users', (req, res) => {
