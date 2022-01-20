@@ -1,8 +1,9 @@
 const User = require("../models/user.model");
 
 const getUsers = async ()=> {
-    const users=  await User.find();
-    return users
+    const data =  await User.find();
+    console.log('data',data)
+    return data
 }
 
 
