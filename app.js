@@ -12,8 +12,9 @@ const userRoute = require('./routes/userRoute')
 //
 const publicPath = path.join(__dirname, 'client/build');
 const URL= process.env.URL_MONGO;
-mongoose.connect(URL,()=>{
+mongoose.connect(URL,()=> {
     console.log('connected');
+})
 
 
 
@@ -24,8 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use('/api/users', userRoute)
+
+
 // app.use('/', go to react)
-})
+// })
 //
 // app.get('/api/users', (req, res) => {
 //     try {
