@@ -12,8 +12,8 @@ const userRoute = require('./routes/userRoute')
 //
 // const publicPath = path.join(__dirname, 'client/public');
 const publicPath = path.join(__dirname, 'client/build');
-const URL= process.env.URL_MONGO;
-mongoose.connect(URL,()=> {
+const uri= process.env.URL_MONGO;
+mongoose.connect(uri,()=> {
     console.log('connected');
 })
 
