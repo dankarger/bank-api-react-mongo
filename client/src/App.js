@@ -1,6 +1,5 @@
 // import { useState } from 'react';
 import myApi from './api/Api';
-
 function App() {
     // const [user, setUser] = useState('');
 

@@ -37,11 +37,11 @@ app.use('/api/users', userRoute)
 //
 // //
 
-//
-// app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(publicPath, 'index.html'));
-// });
-//
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(publicPath, 'index.html'));
+});
+
 
 app.listen(port, () => {
     console.log('listening on port ' + port);
