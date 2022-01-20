@@ -6,5 +6,5 @@ if (process.env.NODE_ENV === 'production') {
     myUrl = 'api';
 }
 export default axios.create({
-    baseURL: myUrl,
+    baseURL: myUrl
 });

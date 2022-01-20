@@ -23,7 +23,7 @@ app.use(express.static(publicPath));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-app.use('/api', userRoute)
+app.use('/', userRoute)
 
 })
 //
