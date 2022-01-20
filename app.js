@@ -6,7 +6,7 @@ const path = require('path');
 //
 const app = express();
 const port = process.env.PORT || 5000;
-const userRoute = require('./routes/userRoute')
+const userRoute = require('./routes/userRoute.js')
 
 //
 const publicPath = path.join(__dirname, 'client/build');
@@ -15,18 +15,18 @@ app.use(express.static(publicPath));
 //
 
 app.use(express.json());
-
-
-
-app.get('/api/users', (req, res) => {
-    try {
-        res.status(200).send({ userName: 'Bob' });
-    } catch (e) {
-        res.status(400).send({ error: e.message });
-    }
-});
+app.use('/', userRoute)
 
 //
+// app.get('/api/users', (req, res) => {
+//     try {
+//         res.status(200).send({ userName: 'Bob' });
+//     } catch (e) {
+//         res.status(400).send({ error: e.message });
+//     }
+// });
+//
+// //
 
 
 app.get('*', (req, res) => {
