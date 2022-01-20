@@ -1,5 +1,6 @@
 const express = require('express');
 require("dotenv").config();
+const mongoose = require('mongoose');
 //
 const cors = require('cors');
 const path = require('path');
@@ -10,6 +11,12 @@ const userRoute = require('./routes/userRoute')
 
 //
 const publicPath = path.join(__dirname, 'client/build');
+const URL= process.env.URL_MONGO;
+mongoose.connect(URL,()=>{
+    console.log('connected');
+
+
+
 app.use(cors());
 app.use(express.static(publicPath));
 //
@@ -18,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', userRoute)
 
+})
 //
 // app.get('/api/users', (req, res) => {
 //     try {
