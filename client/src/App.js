@@ -13,7 +13,7 @@ function App() {
         <div className='App'>
 
            <h1> Hello World 2</h1>
-            <button onClick={getReq}>get</button>
+            <button onClick={()=>getReq()}>get</button>
         </div>
     );
 }
