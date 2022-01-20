@@ -6,7 +6,7 @@ const path = require('path');
 //
 const app = express();
 const port = process.env.PORT || 5000;
-const userRouter = require('./routes/userRoutes')
+const userRoute = require('./routes/userRoute')
 
 //
 const publicPath = path.join(__dirname, 'client/build');
