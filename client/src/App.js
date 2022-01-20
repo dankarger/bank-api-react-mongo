@@ -13,7 +13,7 @@ function App() {
     return (
         <div className='App'>
 
-            Hello World
+           <h1> Hello World 2</h1>
             <button onClick={getReq}>get</button>
         </div>
     );
