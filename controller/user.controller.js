@@ -1,4 +1,4 @@
-const UserService = require('../services/user.services.js')
+const UserService = require('../services/user.services')
 
 
 
