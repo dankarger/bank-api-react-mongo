@@ -9,7 +9,7 @@ function App() {
         console.log('cl')
         const { data } = await myApi.get('/users/getUsers');
 
-        console.log(data);
+         console.log(data);
     };
     return (
         <div className='App'>
