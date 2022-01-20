@@ -12,8 +12,8 @@ function App() {
     };
     return (
         <div className='App'>
-            {' '}
-            Hello World!
+
+            Hello World
             <button onClick={getReq}>get</button>
         </div>
     );
