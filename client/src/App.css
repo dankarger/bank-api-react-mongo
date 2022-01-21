@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  /*font-family: 'Dongle', sans-serif;*/
+  font-family: 'Playfair Display', serif;
 }
 
 .App-logo {
@@ -35,4 +37,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.card {
+  border:black 2px solid;
 }
