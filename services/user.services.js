@@ -8,13 +8,12 @@ const getUsers = async ()=> {
 
 
 const addUser = async (req, res) => {
-    console.log('back-adduser',req.body)
     const user = await User.create(req.body)
     return user
 }
 
-const getUser = async (id) => {
-    const user = await User.findById(id)
+const getUser = async (passId) => {
+    const user = await User.findOne({passId: passId})
     return user
 }
 

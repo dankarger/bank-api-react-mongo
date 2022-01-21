@@ -103,6 +103,9 @@ function App() {
         console.log('n',newUser)
 
     }
+    const handleFindUser = () => {
+
+    }
     const showForm=()=> {
          if(isFormOpen){
              return(
@@ -119,7 +122,7 @@ function App() {
             <div>
             </div>
             {/*<button onClick={() => getReq()}>get</button>*/}
-            <Ui getusers={getReq} addUser={addUser}/>
+            <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
             <div>
                 {showUsers()}
                 {showForm()}
