@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
         validate(amount) {
             if (amount < 0) throw Error( 'amount must be positive' )
         }
+
     }
 });
 
