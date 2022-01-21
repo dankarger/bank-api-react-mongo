@@ -2,6 +2,8 @@
   text-align: center;
   /*font-family: 'Dongle', sans-serif;*/
   font-family: 'Playfair Display', serif;
+  height:100vh;
+  width:100vw;
 }
 
 .App-logo {
@@ -30,6 +32,17 @@
   color: #61dafb;
 }
 
+
+.card {
+  border:black 2px solid;
+}
+.card span {
+  color: #282c34;
+  text-shadow: #61dafb 1px 1px 1px;
+  font-size: calc(1rem + 1vw);
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -37,8 +50,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.card {
-  border:black 2px solid;
 }
