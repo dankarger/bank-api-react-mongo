@@ -10,42 +10,52 @@ function App() {
     // const [user, setUser] = useState('');
     const [users, setUsers] = useState([]);
     const [isDataOpen, setIsDataOpen] = useState(false);
-    const [isFormOpen, setIsFormOpen] = useState(false)
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [newUser,setNewUser] = useState({})
+    const[errorMessage,setErrorMessage] =useState('')
     console.log(process.env.NODE_ENV);
 
     const getReq = async () => {
-        console.log('click')
-        const {data} = await myApi.get('/users/get-users', {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        console.log('data', data)
-        setUsers(data)
-        setIsDataOpen(!isDataOpen)
-
+        setErrorMessage('')
+        try {
+            const {data} = await myApi.get('/users/get-users')
+            console.log('data', data)
+            setUsers(data)
+            setIsDataOpen(!isDataOpen)
+        }catch(e) {
+            console.log(e.message);
+            setErrorMessage(e.message)
+        }
     };
     const addUser=async ()=>{
-        // try{
-        //     const {data} = await myApi.post('/users/add-user',
-        //         {name:"testttt",cash:"217878212",credit:18823,passId:171}
-        //     )
-            setIsFormOpen(!isFormOpen)
-        // }catch (e) {
-        //     console.log(e.message)
-        // }
-
+            setIsFormOpen(!isFormOpen);
     }
-    const submitFormAddUser = async ()=>{
+    const handleSubmitFormAddUser = async ()=>{
+        setErrorMessage('')
         try{
-            const {data} = await myApi.post('/users/add-user',
-                {name:"testttt",cash:"217878212",credit:18823,passId:171}
-            )
+            // const {data} = await myApi.post('/users/add-user',
+            //     {name:"testttt",cash:"217878212",credit:18823,passId:171}
+            // )
             setIsFormOpen(!isFormOpen)
         }catch (e) {
-            console.log(e.message)
+            console.log(e.message);
+            setErrorMessage(e.message)
         }
+    }
+    const handleCancelForm=()=> {
+        setIsFormOpen(!isFormOpen)
+    }
 
+    const handleDeleteUser = async (id) => {
+        setErrorMessage('')
+        try {
+            console.log('id',id)
+             const user = await myApi.delete('/users/delete-user', {id: id })
+            console.log('1',user)
+        } catch (e) {
+            console.log(e.message)
+            setErrorMessage(e.message)
+        }
     }
 
     const showUsers = () => {
@@ -59,16 +69,24 @@ function App() {
                             <h4>Cash: <span>{user.cash}</span></h4>
                             <h4>Credit: <span>{user.credit}</span></h4>
                             <h4>Active: <span>{user.isActive}</span></h4>
+                            <Button name="delete" callback={()=>handleDeleteUser(user._id)} />
                         </div>)
                 })
             }
         }
     }
+
+    const handleFormInputs = (e)=>{
+        console.log(e.target.name,e.target.value);
+        setNewUser({[e.target.name]:e.target.value});
+        console.log(newUser)
+
+    }
     const showForm=()=> {
          if(isFormOpen){
              return(
                  <div>
-                     <Form />
+                     <Form submit={handleSubmitFormAddUser} cancel={handleCancelForm} handleInputs={handleFormInputs}/>
                  </div>
              )
          }
@@ -79,7 +97,6 @@ function App() {
             <div>
             </div>
             {/*<button onClick={() => getReq()}>get</button>*/}
-
             <Ui getusers={getReq} addUser={addUser}/>
             <div>
                 {showUsers()}

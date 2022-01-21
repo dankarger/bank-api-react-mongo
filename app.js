@@ -11,45 +11,19 @@ const app = express();
 const port = process.env.PORT || 5000;
 const userRoute = require('./routes/userRoute')
 
-//
-// const publicPath = path.join(__dirname, 'client/public');
-// const publicPath = path.join(__dirname, 'client/build');
 let publicPath = path.join(__dirname, 'client/build')
 if(port===5000){
     publicPath = path.join(__dirname, 'client/public')
 }
 // const URL= process.env.URL_MONGO;
 
-
-
-
 app.use(cors());
 app.use(express.static(publicPath));
-//
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use('/api/users', userRoute)
-//
-// mongoose.connect(URL,()=> {
-//     console.log(URL)
-//     console.log('connected');
-// })
-
-
-
-// app.use('/', go to react)
-// })
-//
-// app.get('/api/users', (req, res) => {
-//     try {
-//         res.status(200).send({ userName: 'Bob' });
-//     } catch (e) {
-//         res.status(400).send({ error: e.message });
-//     }
-// });
-//
-// //
 
 
 app.get('*', (req, res) => {
