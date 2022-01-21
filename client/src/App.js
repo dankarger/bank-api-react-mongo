@@ -7,9 +7,9 @@ function App() {
 
     const getReq = async () => {
         console.log('cl')
-        const { data } = await myApi.get('/users/getUsers');
+        const { data } = await myApi.get('/users/get-users').then(res=>console.log(res))
 
-         console.log(data);
+
     };
     return (
         <div className='App'>
