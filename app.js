@@ -12,8 +12,8 @@ const port = process.env.PORT || 5000;
 const userRoute = require('./routes/userRoute')
 
 //
-const publicPath = path.join(__dirname, 'client/public');
-// const publicPath = path.join(__dirname, 'client/build');
+// const publicPath = path.join(__dirname, 'client/public');
+const publicPath = path.join(__dirname, 'client/build');
 // const URL= process.env.URL_MONGO;
 
 
