@@ -8,6 +8,7 @@ const getUsers = async ()=> {
 
 
 const addUser = async (req, res) => {
+    console.log('back-adduser',req.body)
     const user = await User.create(req.body)
     return user
 }
@@ -21,6 +22,7 @@ const getActiveUsers = async () => {
     const users = await User.where("isActive").equals("true");
     return users
 }
+
 const deleteUser = async (id) => {
     const user = await User.deleteOne({_id:id})
     return (user);

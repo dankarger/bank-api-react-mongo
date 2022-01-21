@@ -12,7 +12,7 @@ const getUsers = async function (req, res) {
 const addUser = async function (req, res ) {
     try {
         const users = await UserService.addUser(req, res);
-        // console.log('user',users)
+        console.log('user',users)
         res.status(200).send(users);
     } catch (e) {
         res.status(400).send({error: e.message})
@@ -22,8 +22,8 @@ const addUser = async function (req, res ) {
 
 const deleteUser = async function (req, res ) {
     try {
-        console.log('req',req.body.id)
-        const deleteUser = await UserService.deleteUser(req.body.id);
+        console.log('req',req.params.id)
+        const deleteUser = await UserService.deleteUser(req.params.id);
         res.status(200).send(deleteUser);
     } catch (e) {
         res.status(400).send({error: e.message})

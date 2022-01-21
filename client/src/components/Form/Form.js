@@ -3,7 +3,7 @@ import './Form.css'
 import Button from "../Button/Button";
 
 
-const Form=({submit,cancel,handleInputs})=> {
+const Form=({submit,cancel,handleInputs,newUser})=> {
 
     return (<div className='form'>
         <h3>Add User</h3>
@@ -25,6 +25,10 @@ const Form=({submit,cancel,handleInputs})=> {
            <label htmlFor="credit">Credit</label>
            <input onChange={handleInputs} type="number" name='credit'/>
        </div>
+        <div>
+            <label htmlFor="isActive">Active</label>
+            <input onChange={handleInputs} type="checkbox" name='isActive' value={newUser.isActive} />
+        </div>
         <div>
             <Button callback={submit} name='Submit' />
             <Button callback={cancel} name='Cancel' />

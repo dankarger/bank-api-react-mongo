@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import myApi from './api/Api';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Ui from "./components/Ui/Ui";
 import Button from "./components/Button/Button";
 import './App.css'
@@ -9,11 +9,18 @@ import Form from "./components/Form/Form";
 function App() {
     // const [user, setUser] = useState('');
     const [users, setUsers] = useState([]);
-    const [isDataOpen, setIsDataOpen] = useState(false);
+    const [isDataOpen, setIsDataOpen] = useState(true);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [newUser,setNewUser] = useState({})
     const[errorMessage,setErrorMessage] =useState('')
     console.log(process.env.NODE_ENV);
+
+    useEffect(()=>{
+        setUsers(getReq());
+    },[])
+    // useEffect(()=>{
+    //
+    // },[users])
 
     const getReq = async () => {
         setErrorMessage('')
@@ -33,10 +40,17 @@ function App() {
     const handleSubmitFormAddUser = async ()=>{
         setErrorMessage('')
         try{
-            // const {data} = await myApi.post('/users/add-user',
-            //     {name:"testttt",cash:"217878212",credit:18823,passId:171}
-            // )
+            console.log('new',newUser)
+            const {passId,name,cash,credit} = newUser
+
+            const {data} = await myApi.post('/users/add-user',
+                {name:newUser.name,
+                    passId:newUser.passId,
+                    cash:newUser.cash,
+                    credit:newUser.credit,
+                isActive:newUser.isActive===true?"true":"false"})
             setIsFormOpen(!isFormOpen)
+
         }catch (e) {
             console.log(e.message);
             setErrorMessage(e.message)
@@ -47,13 +61,15 @@ function App() {
     }
 
     const handleDeleteUser = async (id) => {
-        setErrorMessage('')
+        // setErrorMessage('')
         try {
             console.log('id',id)
-             const user = await myApi.delete('/users/delete-user', {id: id })
+             const user = await myApi.delete(`/users/delete-user/${id}`)
             console.log('1',user)
+            setUsers(getReq());
+            setIsDataOpen(true)
         } catch (e) {
-            console.log(e.message)
+            console.log(e)
             setErrorMessage(e.message)
         }
     }
@@ -69,7 +85,9 @@ function App() {
                             <h4>Cash: <span>{user.cash}</span></h4>
                             <h4>Credit: <span>{user.credit}</span></h4>
                             <h4>Active: <span>{user.isActive}</span></h4>
-                            <Button name="delete" callback={()=>handleDeleteUser(user._id)} />
+                            <Button name="Delete" callback={()=>handleDeleteUser(user._id)} />
+                            <Button name="Edit"  />
+
                         </div>)
                 })
             }
@@ -78,15 +96,18 @@ function App() {
 
     const handleFormInputs = (e)=>{
         console.log(e.target.name,e.target.value);
-        setNewUser({[e.target.name]:e.target.value});
-        console.log(newUser)
+        let newObjectUser = newUser
+        newObjectUser[e.target.name]=e.target.value
+        // setNewUser({...[],[e.target.name]:e.target.value});
+        setNewUser(newObjectUser)
+        console.log('n',newUser)
 
     }
     const showForm=()=> {
          if(isFormOpen){
              return(
                  <div>
-                     <Form submit={handleSubmitFormAddUser} cancel={handleCancelForm} handleInputs={handleFormInputs}/>
+                     <Form submit={handleSubmitFormAddUser} cancel={handleCancelForm} handleInputs={handleFormInputs} newUser={newUser}/>
                  </div>
              )
          }
@@ -94,6 +115,7 @@ function App() {
     return (
         <div className='App'>
             <h1> Hello Master Bank Manager</h1>
+            <h2>Users: {users.length}</h2>
             <div>
             </div>
             {/*<button onClick={() => getReq()}>get</button>*/}
