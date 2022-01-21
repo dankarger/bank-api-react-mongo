@@ -24,6 +24,15 @@ function App() {
         setIsDataOpen(!isDataOpen)
 
     };
+    const addUser=async ()=>{
+        const {data} = await myApi.post('/users/add-user',
+           {name:"testttt",cash:"217878212",credit:18823,passId:17723}
+        )
+        console.log('data', data)
+        setUsers(data)
+        setIsDataOpen(!isDataOpen)
+    }
+
     const showUsers = () => {
         if (isDataOpen) {
             if (users.length > 0) {
@@ -47,7 +56,7 @@ function App() {
             </div>
             {/*<button onClick={() => getReq()}>get</button>*/}
 
-            <Ui getusers={getReq}/>
+            <Ui getusers={getReq} addUser={addUser}/>
             <div>
                 {showUsers()}
             </div>

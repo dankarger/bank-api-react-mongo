@@ -9,6 +9,7 @@ const getUsers = async ()=> {
 
 const addUser = async (req, res) => {
     const user = await User.create(req.body)
+
     return user
 }
 

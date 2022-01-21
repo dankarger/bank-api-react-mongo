@@ -13,7 +13,11 @@ const userRoute = require('./routes/userRoute')
 
 //
 // const publicPath = path.join(__dirname, 'client/public');
-const publicPath = path.join(__dirname, 'client/build');
+// const publicPath = path.join(__dirname, 'client/build');
+let publicPath = path.join(__dirname, 'client/build')
+if(port===5000){
+    publicPath = path.join(__dirname, 'client/public')
+}
 // const URL= process.env.URL_MONGO;
 
 
