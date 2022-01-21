@@ -4,12 +4,13 @@ import {useState} from "react";
 import Ui from "./components/Ui/Ui";
 import Button from "./components/Button/Button";
 import './App.css'
-
+import Form from "./components/Form/Form";
 
 function App() {
     // const [user, setUser] = useState('');
-    const [users, setUsers] = useState([])
-    const [isDataOpen, setIsDataOpen] = useState(false)
+    const [users, setUsers] = useState([]);
+    const [isDataOpen, setIsDataOpen] = useState(false);
+    const [isFormOpen, setIsFormOpen] = useState(false)
     console.log(process.env.NODE_ENV);
 
     const getReq = async () => {
@@ -25,12 +26,26 @@ function App() {
 
     };
     const addUser=async ()=>{
-        const {data} = await myApi.post('/users/add-user',
-           {name:"testttt",cash:"217878212",credit:18823,passId:17723}
-        )
-        console.log('data', data)
-        setUsers(data)
-        setIsDataOpen(!isDataOpen)
+        // try{
+        //     const {data} = await myApi.post('/users/add-user',
+        //         {name:"testttt",cash:"217878212",credit:18823,passId:171}
+        //     )
+            setIsFormOpen(!isFormOpen)
+        // }catch (e) {
+        //     console.log(e.message)
+        // }
+
+    }
+    const submitFormAddUser = async ()=>{
+        try{
+            const {data} = await myApi.post('/users/add-user',
+                {name:"testttt",cash:"217878212",credit:18823,passId:171}
+            )
+            setIsFormOpen(!isFormOpen)
+        }catch (e) {
+            console.log(e.message)
+        }
+
     }
 
     const showUsers = () => {
@@ -49,6 +64,15 @@ function App() {
             }
         }
     }
+    const showForm=()=> {
+         if(isFormOpen){
+             return(
+                 <div>
+                     <Form />
+                 </div>
+             )
+         }
+    }
     return (
         <div className='App'>
             <h1> Hello Master Bank Manager</h1>
@@ -59,6 +83,7 @@ function App() {
             <Ui getusers={getReq} addUser={addUser}/>
             <div>
                 {showUsers()}
+                {showForm()}
             </div>
         </div>
     );
