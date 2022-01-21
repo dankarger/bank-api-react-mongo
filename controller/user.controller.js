@@ -19,6 +19,7 @@ const addUser = async function (req, res ) {
     }
 }
 
+
 const deleteUser = async function (req, res ) {
     try {
         console.log('req',req.body.id)
@@ -27,8 +28,8 @@ const deleteUser = async function (req, res ) {
     } catch (e) {
         res.status(400).send({error: e.message})
     }
-
 }
+
 
 module.exports = {
     getUsers,
