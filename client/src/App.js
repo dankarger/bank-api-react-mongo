@@ -14,7 +14,11 @@ function App() {
 
     const getReq = async () => {
         console.log('click')
-        const {data} = await myApi.get('/users/get-users')
+        const {data} = await myApi.get('/users/get-users', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         console.log('data', data)
         setUsers(data)
         setIsDataOpen(!isDataOpen)
