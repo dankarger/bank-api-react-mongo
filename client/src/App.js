@@ -13,7 +13,6 @@ function App() {
     console.log(process.env.NODE_ENV);
 
     const getReq = async () => {
-        console.log('cl')
         const {data} = await myApi.get('/users/get-users')
         console.log('data', data)
         setUsers(data)
