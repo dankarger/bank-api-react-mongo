@@ -1,6 +1,8 @@
 const express = require('express');
 require("dotenv").config();
+require("./db/mongoose")
 const mongoose = require('mongoose');
+
 //
 const cors = require('cors');
 const path = require('path');
@@ -12,11 +14,8 @@ const userRoute = require('./routes/userRoute')
 //
 // const publicPath = path.join(__dirname, 'client/public');
 const publicPath = path.join(__dirname, 'client/build');
-const uri= process.env.URL_MONGO;
-mongoose.connect(uri,()=> {
-    console.log(uri)
-    console.log('connected');
-})
+// const URL= process.env.URL_MONGO;
+
 
 
 
@@ -27,8 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use('/api/users', userRoute)
-
-
+//
+// mongoose.connect(URL,()=> {
+//     console.log(URL)
+//     console.log('connected');
+// })
 
 
 
