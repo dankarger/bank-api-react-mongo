@@ -10,8 +10,9 @@ const getUsers = async function (req, res) {
 }
 const getUser = async function (req, res) {
     try {
-        const users = await UserService.getUser(req.params.passId);
-        res.status(200).send(users);
+        const user = await UserService.getUser(req.params.passId);
+        console.log('find',user)
+        res.status(200).send(user);
     } catch (e) {
         res.status(400).send({error: e.message})
     }

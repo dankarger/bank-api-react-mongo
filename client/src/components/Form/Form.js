@@ -3,27 +3,27 @@ import './Form.css'
 import Button from "../Button/Button";
 
 
-const Form=({submit,cancel,handleInputs,newUser})=> {
+const Form=({submit,cancel,handleInputs,newUser,title})=> {
 
     return (<div className='form'>
-        <h3>Add User</h3>
+        <h3>{title}</h3>
         <div className='inputs-div'></div>
         <div>
             <label htmlFor="name">Name</label>
-            <input onChange={handleInputs} type="text" name='name'/>
+            <input onChange={handleInputs} type="text" name='name' value={newUser.name}/>
         </div>
 
         <div>
             <label htmlFor="name">PassId</label>
-            <input onChange={handleInputs} type="number" name='passId'/>
+            <input onChange={handleInputs} type="number" name='passId' value={newUser.passId}/>
         </div>
         <div>
             <label htmlFor="passId">Cash</label>
-            <input onChange={handleInputs} type="number" name='cash'/>
+            <input onChange={handleInputs} type="number" name='cash' value={newUser.cash}/>
         </div>
        <div>
            <label htmlFor="credit">Credit</label>
-           <input onChange={handleInputs} type="number" name='credit'/>
+           <input onChange={handleInputs} type="number" name='credit' value={newUser.credit}/>
        </div>
         <div>
             <label htmlFor="isActive">Active</label>

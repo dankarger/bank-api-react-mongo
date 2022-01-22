@@ -36,6 +36,12 @@
 .card {
   border:black 2px solid;
 }
+.card2 {
+  background: #90bac4;
+  border:black 2px solid;
+}
+
+
 .card span {
   color: #282c34;
   text-shadow: #61dafb 1px 1px 1px;

@@ -11,17 +11,22 @@ function App() {
     const [users, setUsers] = useState([]);
     const [isDataOpen, setIsDataOpen] = useState(true);
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const [newUser,setNewUser] = useState({})
-    const[errorMessage,setErrorMessage] =useState('')
+    const [isEditFormOpen, setEditIsFormOpen] = useState(false);
+    const [isFindUserOpen, setIsFindUserOpen] = useState(false);
+    const [newUser, setNewUser] = useState({});
+    const[editUser,setEditUser]=useState({});
+    const [findUser, setFindUser] = useState({});
+
+    const [errorMessage, setErrorMessage] = useState('');
+
     console.log(process.env.NODE_ENV);
 
-    useEffect(()=>{
+    useEffect(() => {
         setUsers(getReq());
-    },[])
-    // useEffect(()=>{
-    //
-    // },[users])
+    }, [])
 
+
+    //Handle Functions
     const getReq = async () => {
         setErrorMessage('')
         try {
@@ -29,43 +34,48 @@ function App() {
             console.log('data', data)
             setUsers(data)
             setIsDataOpen(!isDataOpen)
-        }catch(e) {
+        } catch (e) {
             console.log(e.message);
             setErrorMessage(e.message)
         }
     };
-    const addUser=async ()=>{
-            setIsFormOpen(!isFormOpen);
+    const addUser = async () => {
+        setIsFormOpen(!isFormOpen);
     }
-    const handleSubmitFormAddUser = async ()=>{
+
+
+    const handleSubmitFormAddUser = async () => {
         setErrorMessage('')
-        try{
-            console.log('new',newUser)
-            const {passId,name,cash,credit} = newUser
+        try {
+            console.log('new', newUser)
+            const {passId, name, cash, credit} = newUser
 
             const {data} = await myApi.post('/users/add-user',
-                {name:newUser.name,
-                    passId:newUser.passId,
-                    cash:newUser.cash,
-                    credit:newUser.credit,
-                isActive:newUser.isActive===true?"true":"false"})
+                {
+                    name: newUser.name,
+                    passId: newUser.passId,
+                    cash: newUser.cash,
+                    credit: newUser.credit,
+                    isActive: newUser.isActive === true ? "true" : "false"
+                })
             setIsFormOpen(!isFormOpen)
 
-        }catch (e) {
+        } catch (e) {
             console.log(e.message);
             setErrorMessage(e.message)
         }
     }
-    const handleCancelForm=()=> {
-        setIsFormOpen(!isFormOpen)
+    const handleCancelForm = () => {
+        setIsFormOpen(false)
+        setEditIsFormOpen(false)
     }
 
     const handleDeleteUser = async (id) => {
         // setErrorMessage('')
         try {
-            console.log('id',id)
-             const user = await myApi.delete(`/users/delete-user/${id}`)
-            console.log('1',user)
+            console.log('id', id)
+            const user = await myApi.delete(`/users/delete-user/${id}`)
+            console.log('1', user)
             setUsers(getReq());
             setIsDataOpen(true)
         } catch (e) {
@@ -74,58 +84,128 @@ function App() {
         }
     }
 
+    const handleFormInputs = (e) => {
+        console.log(e.target.name, e.target.value);
+        let newObjectUser = newUser
+        newObjectUser[e.target.name] = e.target.value
+        // setNewUser({...[],[e.target.name]:e.target.value});
+        setNewUser(newObjectUser)
+        console.log('n', newUser)
+
+    }
+    const handleFindUser = async (passId) => {
+        try {
+            const {data} = await myApi.get(`/users/get-user/${passId}`)
+            setFindUser(data)
+            console.log('g', data)
+            // setIsDataOpen(false)
+            setIsFindUserOpen(true)
+            return data
+
+        } catch (e) {
+            console.log(e.message);
+            setErrorMessage(e.message)
+        }
+    }
+
+    const handleEditUser = async (passId) => {
+        console.log('passId',passId)
+        const user= await handleFindUser(passId);
+        setNewUser(user)
+        console.log('edit',newUser)
+        setEditIsFormOpen(true);
+
+
+    }
+
+
+
+    //Show Functions
+
     const showUsers = () => {
         if (isDataOpen) {
             if (users.length > 0) {
                 return users.map(user => {
                     return (
                         <div className='card' key={user._id}>
-                            <h3>Name: <span>{user.name}</span> </h3>
+                            <h3>Name: <span>{user.name}</span></h3>
                             <h4>Pass ID: <span>{user.passId}</span></h4>
                             <h4>Cash: <span>{user.cash}</span></h4>
                             <h4>Credit: <span>{user.credit}</span></h4>
                             <h4>Active: <span>{user.isActive}</span></h4>
-                            <Button name="Delete" callback={()=>handleDeleteUser(user._id)} />
-                            <Button name="Edit"  />
-
+                            <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
+                            <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
                         </div>)
                 })
             }
         }
     }
 
-    const handleFormInputs = (e)=>{
-        console.log(e.target.name,e.target.value);
-        let newObjectUser = newUser
-        newObjectUser[e.target.name]=e.target.value
-        // setNewUser({...[],[e.target.name]:e.target.value});
-        setNewUser(newObjectUser)
-        console.log('n',newUser)
 
+    const showForm = () => {
+        if (isFormOpen) {
+            return (
+                <div>
+                    <Form submit={handleSubmitFormAddUser}
+                          cancel={handleCancelForm}
+                          handleInputs={handleFormInputs}
+                          title={'Add User'}
+                          newUser={newUser}/>
+                </div>
+            )
+        }
     }
-    const handleFindUser = () => {
 
+    const showEditForm = () => {
+        if (isEditFormOpen) {
+            return (
+                <div>
+                    <Form submit={handleSubmitFormAddUser}
+                          cancel={handleCancelForm}
+                          handleInputs={handleFormInputs}
+                          title={'Edit User'}
+                          newUser={newUser}/>
+                </div>
+            )
+        }
     }
-    const showForm=()=> {
-         if(isFormOpen){
-             return(
-                 <div>
-                     <Form submit={handleSubmitFormAddUser} cancel={handleCancelForm} handleInputs={handleFormInputs} newUser={newUser}/>
-                 </div>
-             )
-         }
+
+    const showFindUser = () => {
+        if (isFindUserOpen) {
+            if (!findUser) {
+                setErrorMessage("User not found")
+            }
+            if (findUser) {
+                return (
+                    <div className='card2 ' key={findUser._id}>
+                        <h3><u>User Found:</u></h3>
+                        <h3><u>Name:</u> <span>{findUser.name}</span></h3>
+                        <h4><u>Pass ID:</u> <span>{findUser.passId}</span></h4>
+                        <h4><u>Cash: </u><span>{findUser.cash}</span></h4>
+                        <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
+                        <h4><u>Active:</u> <span>{findUser.isActive}</span></h4>
+                        <Button name="Delete" callback={() => handleDeleteUser(findUser._id)}/>
+                        <Button name="Edit" />
+                        <Button name="Close" callback={() => setIsFindUserOpen(false)}/>
+                    </div>)
+            }
+        }
     }
+
     return (
         <div className='App'>
             <h1> Hello Master Bank Manager</h1>
             <h2>Users: {users.length}</h2>
+            {errorMessage}
             <div>
             </div>
             {/*<button onClick={() => getReq()}>get</button>*/}
             <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
             <div>
+                {showFindUser()}
                 {showUsers()}
                 {showForm()}
+                {showEditForm()}
             </div>
         </div>
     );
