@@ -64,7 +64,7 @@ const updateUser = async function (req, res) {
 
 const addCredit = async function (req, res) {
     try {
-        const {id} = req.body;
+        const {id} = req.params;
         const {amount} = req.body;
         const updatedUser = await UserService.addCredit(id, amount);
         res.status(200).send(updatedUser);

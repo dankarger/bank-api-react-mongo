@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     cash: {
         type: Number,
         require:true,
-        min:0,
+        min:[0, 'Amount cant be beow 0'],
         validate(amount) {
             if (amount < 0) throw Error( 'amount must be positive' )
         }

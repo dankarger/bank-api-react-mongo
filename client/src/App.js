@@ -1,12 +1,12 @@
 // import { useState } from 'react';
 import myApi from './api/Api';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Ui from "./components/Ui/Ui";
 import Button from "./components/Button/Button";
 import './App.css'
 import Form from "./components/Form/Form";
 import PopupWindow from "./components/PopUpWindow/PopupWindow";
-import {withdraw} from "../../controller/user.controller";
+
 
 function App() {
     // const [user, setUser] = useState('');
@@ -16,18 +16,23 @@ function App() {
     const [isEditFormOpen, setEditIsFormOpen] = useState(false);
     const [isFindUserOpen, setIsFindUserOpen] = useState(false);
     const [newUser, setNewUser] = useState({});
-    const[popUpAmount,setPopUpAmount]=useState(Number);
+    const [popUpAmount, setPopUpAmount] = useState(Number);
     const [findUser, setFindUser] = useState({});
-    const[isPopUpWindow,setIsPopUpWindow]=useState(false);
-    const[popUpTitle,setPopUpTitle]=useState('')
-    const[popUpId,setPopUpId]=useState(Number)
+    const [isPopUpWindow, setIsPopUpWindow] = useState(false);
+    const [popUpTitle, setPopUpTitle] = useState('')
+    const [popUpId, setPopUpId] = useState(Number)
     const [errorMessage, setErrorMessage] = useState('');
+    const [renderPage, setRenderPage] = useState(false)
 
-    console.log(process.env.NODE_ENV);
 
     useEffect(() => {
         setUsers(getReq());
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        setUsers(getReq())
+        setIsDataOpen(false)
+    }, [renderPage])
 
 
     //Handle Functions
@@ -130,46 +135,89 @@ function App() {
         }
     }
     const handleEditUser = async (passId) => {
-        console.log('passId',passId)
-        const user= await handleFindUser(passId);
+        console.log('passId', passId)
+        const user = await handleFindUser(passId);
         setNewUser(user)
-        console.log('edit',newUser)
+        console.log('edit', newUser)
         setEditIsFormOpen(true);
     }
 
-    const handleWithdraw =(passId) => {
+    const handleWithdraw = (passId) => {
         setPopUpTitle('withdraw')
         setPopUpId(passId)
         setIsPopUpWindow(!isPopUpWindow);
     }
 
-    const handleDeposit = (passId) => {}
+    const handleDeposit = (passId) => {
+        setPopUpTitle('deposit')
+        setPopUpId(passId)
+        setIsPopUpWindow(!isPopUpWindow);
+    }
 
+    const handleAddCredit = (passId) => {
+        setPopUpTitle('add credit')
+        setPopUpId(passId)
+        setIsPopUpWindow(!isPopUpWindow);
+    }
 
-    const handleChangePopUp = (e)=>{
+    const handleChangePopUp = (e) => {
         setPopUpAmount(e.target.value)
     }
-    const showPopUp=()=>{
-        if(isPopUpWindow) {
+    const showPopUp = () => {
+        if (isPopUpWindow) {
+            let submitFunction
+            if(popUpTitle==='withdraw') submitFunction= ()=>withdraw(popUpId, popUpAmount);
+            if(popUpTitle==='deposit') submitFunction= ()=>deposit(popUpId, popUpAmount);
+            if(popUpTitle==='add credit') submitFunction= ()=>addCredit(popUpId, popUpAmount);
+
             return <PopupWindow title={popUpTitle}
-                                cancel={()=>setIsPopUpWindow(false)}
+                                cancel={() => setIsPopUpWindow(false)}
                                 handleChange={handleChangePopUp}
-                                submit={popUpTitle==='withdraw'?withdraw(popUpId,popUpAmount):deposit(popUpId,popUpAmount)}
-                                />
+                                submit={submitFunction}
+            />
         }
     }
 
 
-    const deposit = async (passId,amount) => {
+    const deposit = async (passId, amount) => {
         try {
-            console.log('deposit',passId,amount)
-            const {data} = await myApi.put(`/users/deposit/${passId}`,{amount:amount})
+            console.log('deposit', passId, amount)
+            const {data} = await myApi.put(`/users/deposit/${passId}`, {amount: amount})
+            setRenderPage(!renderPage);
+            setIsPopUpWindow(false);
+            return data
+        } catch (e) {
+            console.log(e.message);
+            setErrorMessage(e.message)
+        }
+    }
+    const withdraw = async (passId, amount) => {
+        try {
+            console.log('withdraw', passId, amount)
+            const {data} = await myApi.put(`/users/withdraw/${passId}`, {amount: amount})
+            setRenderPage(!renderPage);
+            setIsPopUpWindow(false);
             return data
 
         } catch (e) {
             console.log(e.message);
             setErrorMessage(e.message)
         }
+    }
+
+    const addCredit= async (passId, amount) => {
+        try {
+            console.log('add credit', passId, amount)
+            const {data} = await myApi.put(`/users/add-credit/${passId}`, {amount: amount})
+            setRenderPage(!renderPage);
+            setIsPopUpWindow(false);
+            return data
+
+        } catch (e) {
+            console.log(e.message);
+            setErrorMessage(e.message)
+        }
+
     }
 
     //Show Functions
@@ -189,7 +237,7 @@ function App() {
                             <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
                             <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
                             <Button name="Deposit" callback={() => handleDeposit(user.passId)}/>
-                            {/*<Button name="Add Credit" callback={() => handleEditUser(user.passId)}/>*/}
+                            <Button name="Add Credit" callback={() => handleAddCredit(user.passId)}/>
                             {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
                         </div>)
                 })
@@ -241,7 +289,7 @@ function App() {
                         <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
                         <h4><u>Active:</u> <span>{findUser.isActive}</span></h4>
                         <Button name="Delete" callback={() => handleDeleteUser(findUser._id)}/>
-                        <Button name="Edit" />
+                        <Button name="Edit"/>
                         <Button name="Close" callback={() => setIsFindUserOpen(false)}/>
                     </div>)
             }

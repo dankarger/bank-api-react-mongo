@@ -75,6 +75,8 @@ const addCredit = async (passId, amount) => {
 
 const withDraw = async (passId,amount) => {
         const user = await User.findOneAndUpdate({passId : passId}, {$inc : {cash: -amount}})
+    // let user = await User.findOne({passId:passId});
+    // user.cash -=
         return user
 }
 
