@@ -147,11 +147,12 @@ function App() {
             return <PopupWindow title='Withdraw'
                                 cancel={()=>setIsPopUpWindow(false)}
                                 handleChange={handleChaneWithDraw}
-
                                 />
         }
     }
+    const handleDeposit =() => {
 
+    }
     //Show Functions
 
     const showUsers = () => {
@@ -168,7 +169,7 @@ function App() {
                             <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
                             <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
                             <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
-                            {/*<Button name="Deposit" callback={() => handleDeposit(user.passId)}/>*/}
+                            <Button name="Deposit" callback={() => handleDeposit(user.passId)}/>
                             {/*<Button name="Add Credit" callback={() => handleEditUser(user.passId)}/>*/}
                             {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
                         </div>)
@@ -176,7 +177,6 @@ function App() {
             }
         }
     }
-
 
     const showForm = () => {
         if (isFormOpen) {

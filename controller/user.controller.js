@@ -78,7 +78,10 @@ const withdraw = async function (req, res) {
     const {passId} = req.params
     console.log('withdraw',amount,passId)
     const isUserCredit = await utils.checkUserCredit(passId, amount)
-    if (!isUserCredit) res.status(200).send({message: 'the user cant withdraw '})
+    if (!isUserCredit) {
+        console.log('not enough credit')
+        res.status(200).send({error:{message: 'the user cant withdraw '}})
+    }
     else {
         try {
             const updatedUser = await UserService.withDraw(passId, amount)
