@@ -72,6 +72,11 @@ const addCredit = async (passId, amount) => {
     const user = await User.findOneAndUpdate({passportId : passId}, {$inc : {credit: amount}})
     return user
 }
+
+const withDraw = async (passId,amount) => {
+        const user = await User.findOneAndUpdate({passId : passId}, {$inc : {cash: -amount}})
+        return user
+}
 module.exports = {
     getUsers,
     addUser,
@@ -83,6 +88,7 @@ module.exports = {
     changeActiveUser,
     filterUsers,
     depositToUser,
-    addCredit
+    addCredit,
+    withDraw
 
 }

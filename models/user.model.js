@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     passId: {
         type: Number,
         require:true,
-        unique:true,
+        unique:[true, ' Passport Id must be unique']
     },
 
     name: {
@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         require:true,
         min:0,
-
         validate(amount) {
             if (amount < 0) throw Error( 'amount must be positive' )
         }

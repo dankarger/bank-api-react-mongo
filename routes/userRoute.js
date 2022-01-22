@@ -10,6 +10,7 @@ userRoute.delete('/delete-user/:id', UserController.deleteUser);
 userRoute.put('/edit-user/:id', UserController.updateUser);
 userRoute.put('/deposit/:id', UserController.depositToUser);
 userRoute.put('/add-credit/:id', UserController.addCredit);
+userRoute.put('/withdraw/:id', UserController.withdraw);
 
 
 module.exports = userRoute;
