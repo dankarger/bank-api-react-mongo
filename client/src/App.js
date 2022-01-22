@@ -7,9 +7,6 @@ import Button from "./components/Button/Button";
 import Form from "./components/Form/Form";
 import PopupWindow from "./components/PopUpWindow/PopupWindow";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
-// import ListTable from "./components/List/List";
-
-
 
 function App() {
     // const [user, setUser] = useState('');
@@ -45,7 +42,7 @@ function App() {
             setIsDataOpen(!isDataOpen)
         } catch (e) {
             console.log(e.message);
-            setErrorMessage({e})
+            setErrorMessage(e.response.data.message)
         }
     };
     const addUser = async () => {
@@ -67,9 +64,10 @@ function App() {
             setIsFormOpen(!isFormOpen)
         } catch (e) {
             console.log({e});
-            setErrorMessage({e})
+            setErrorMessage(e.response.data.message)
         }
     }
+
     const handleSubmitFormEditUser = async () => {
         setErrorMessage('')
         try {
@@ -83,7 +81,7 @@ function App() {
             setIsFormOpen(!isFormOpen)
         } catch (e) {
             console.log(e.message);
-            setErrorMessage(e.message)
+            setErrorMessage(e.response.data.message)
         }
     }
 
@@ -101,7 +99,7 @@ function App() {
             setIsDataOpen(true)
         } catch (e) {
             console.log(e)
-            setErrorMessage(e.message)
+            setErrorMessage(e.response.data.message)
         }
     }
 
@@ -111,20 +109,21 @@ function App() {
         newObjectUser[e.target.name] = e.target.value
         setNewUser(newObjectUser)
     }
+
     const handleFindUser = async (passId) => {
         try {
             if(passId<1){
                 throw Error('PassPort ID cant be less than 1')
             }
             const {data} = await myApi.get(`/users/get-user/${passId}`)
-            if(!data)  throw Error('user not fount')
+            if(!data)   return setErrorMessage('User not found')
             setFindUser(data)
             setErrorMessage('')
             setIsFindUserOpen(true)
             return data
         } catch (e) {
             console.log(e.message);
-            setErrorMessage(e.message)
+            setErrorMessage(e.response.data.message)
         }
     }
     const handleEditUser = async (passId) => {
@@ -154,6 +153,7 @@ function App() {
     const handleChangePopUp = (e) => {
         setPopUpAmount(e.target.value)
     }
+
     const showPopUp = () => {
         if (isPopUpWindow) {
             let submitFunction
@@ -176,9 +176,10 @@ function App() {
             return data
         } catch (e) {
             console.log(e.message);
-            setErrorMessage(e.message)
+            setErrorMessage(e.response.data.message)
         }
     }
+
     const withdraw = async (passId, amount) => {
         try {
             const {data} = await myApi.put(`/users/withdraw/${passId}`, {amount: amount})
@@ -187,8 +188,8 @@ function App() {
             return data
 
         } catch (e) {
-            console.log(e.message);
-            setErrorMessage(e.message)
+            console.log(e.response);
+            setErrorMessage(e.response.data.message)
         }
     }
 
@@ -201,19 +202,16 @@ function App() {
 
         } catch (e) {
             console.log(e.message);
-            setErrorMessage(e)
+            setErrorMessage(e.response.data.message)
         }
-
     }
 
     //Show Functions
-
     const showUsers = () => {
         if (isDataOpen) {
             if (users.length > 0) {
                 return users.map(user => {
                     return (
-
                         <div className='card' key={user._id}>
                             <div className="items-div">
                                 <p className="item">Name: <span>{user.name}</span></p>
@@ -291,7 +289,6 @@ function App() {
         }
     }
 
-
     return (
         <ErrorBoundary>
             <div className='App'>
@@ -299,14 +296,11 @@ function App() {
                     <h1> Welcome to Bank Manager</h1>
                     <h2>Users: {users.length}</h2>
                 </div>
-
                 <div className="error-div">
                     {errorMessage}
                 </div>
-
                 <div>
                 </div>
-                {/*<button onClick={() => getReq()}>get</button>*/}
                 <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
                 <div>
                     {/*<ListTable />*/}
@@ -314,7 +308,6 @@ function App() {
                     <div className="show-users">
                         {showUsers()}
                     </div>
-
                     {showForm()}
                     {showEditForm()}
                     {showPopUp()}

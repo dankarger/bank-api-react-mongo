@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 
 
 const Ui=({getusers, addUser,findUser})=>{
-        const[passId,setPassId]=useState(Number)
+        const[passId,setPassId]=useState(1)
 
     const handleSearchChange=(e)=>{
             setPassId(e.target.value)
@@ -16,7 +16,12 @@ const Ui=({getusers, addUser,findUser})=>{
             <Button className={'button-ui'} callback={addUser} name='Add User' />
             {/*<Button callback={findUser} name='Find User' />*/}
             <label htmlFor="findUser">search</label>
-            <input onChange={handleSearchChange} type="text" name="findUser" value={passId} placeholder={"Passport Id"}/>
+            <input onChange={handleSearchChange}
+                   type="number"
+                   name="findUser"
+                   value={passId}
+                   placeholder='test'
+                   min="0" />
             <button className={'button-ui'} onClick={()=>findUser(passId)} > Find</button>
         </div>
     )
