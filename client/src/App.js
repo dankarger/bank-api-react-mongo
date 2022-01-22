@@ -6,6 +6,7 @@ import Button from "./components/Button/Button";
 import './App.css'
 import Form from "./components/Form/Form";
 import PopupWindow from "./components/PopUpWindow/PopupWindow";
+import {withdraw} from "../../controller/user.controller";
 
 function App() {
     // const [user, setUser] = useState('');
@@ -15,10 +16,11 @@ function App() {
     const [isEditFormOpen, setEditIsFormOpen] = useState(false);
     const [isFindUserOpen, setIsFindUserOpen] = useState(false);
     const [newUser, setNewUser] = useState({});
-    const[withDrawAmount,setWithDrawAmount]=useState(Number);
+    const[popUpAmount,setPopUpAmount]=useState(Number);
     const [findUser, setFindUser] = useState({});
     const[isPopUpWindow,setIsPopUpWindow]=useState(false);
-
+    const[popUpTitle,setPopUpTitle]=useState('')
+    const[popUpId,setPopUpId]=useState(Number)
     const [errorMessage, setErrorMessage] = useState('');
 
     console.log(process.env.NODE_ENV);
@@ -135,24 +137,41 @@ function App() {
         setEditIsFormOpen(true);
     }
 
-    const handleWithdraw =(passId, amount) => {
+    const handleWithdraw =(passId) => {
+        setPopUpTitle('withdraw')
+        setPopUpId(passId)
         setIsPopUpWindow(!isPopUpWindow);
-
     }
-    const handleChaneWithDraw = (e)=>{
-        setWithDrawAmount(e.target.value)
+
+    const handleDeposit = (passId) => {}
+
+
+    const handleChangePopUp = (e)=>{
+        setPopUpAmount(e.target.value)
     }
     const showPopUp=()=>{
         if(isPopUpWindow) {
-            return <PopupWindow title='Withdraw'
+            return <PopupWindow title={popUpTitle}
                                 cancel={()=>setIsPopUpWindow(false)}
-                                handleChange={handleChaneWithDraw}
+                                handleChange={handleChangePopUp}
+                                submit={popUpTitle==='withdraw'?withdraw(popUpId,popUpAmount):deposit(popUpId,popUpAmount)}
                                 />
         }
     }
-    const handleDeposit =() => {
 
+
+    const deposit = async (passId,amount) => {
+        try {
+            console.log('deposit',passId,amount)
+            const {data} = await myApi.put(`/users/deposit/${passId}`,{amount:amount})
+            return data
+
+        } catch (e) {
+            console.log(e.message);
+            setErrorMessage(e.message)
+        }
     }
+
     //Show Functions
 
     const showUsers = () => {
