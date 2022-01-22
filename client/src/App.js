@@ -27,7 +27,6 @@ function App() {
     const [errorMessage, setErrorMessage] = useState('');
     const [renderPage, setRenderPage] = useState(false)
 
-
     useEffect(() => {
         setUsers(getReq());
     }, []);
@@ -37,13 +36,11 @@ function App() {
         setIsDataOpen(false)
     }, [renderPage])
 
-
     //Handle Functions
     const getReq = async () => {
         setErrorMessage('')
         try {
             const {data} = await myApi.get('/users/get-users')
-            // console.log('data', data)
             setUsers(data)
             setIsDataOpen(!isDataOpen)
         } catch (e) {
@@ -55,13 +52,10 @@ function App() {
         setIsFormOpen(!isFormOpen);
     }
 
-
     const handleSubmitFormAddUser = async () => {
         setErrorMessage('')
         try {
-            // console.log('new', newUser)
-            const {passId, name, cash, credit} = newUser
-
+        window.confirm("Are you sure you want to add user?")
             const {data} = await myApi.post('/users/add-user',
                 {
                     name: newUser.name,
@@ -71,13 +65,11 @@ function App() {
                     isActive: newUser.isActive === true ? "true" : "false"
                 })
             setIsFormOpen(!isFormOpen)
-
         } catch (e) {
             console.log({e});
             setErrorMessage({e})
         }
     }
-
     const handleSubmitFormEditUser = async () => {
         setErrorMessage('')
         try {
@@ -89,7 +81,6 @@ function App() {
                     isActive: newUser.isActive === true ? "true" : "false"
                 })
             setIsFormOpen(!isFormOpen)
-
         } catch (e) {
             console.log(e.message);
             setErrorMessage(e.message)
@@ -102,11 +93,10 @@ function App() {
     }
 
     const handleDeleteUser = async (id) => {
-        // setErrorMessage('')
+        setErrorMessage('')
+        window.confirm("Are You sure you want to delete this user ?");
         try {
-            // console.log('id', id)
             const user = await myApi.delete(`/users/delete-user/${id}`)
-            // console.log('1', user)
             setUsers(getReq());
             setIsDataOpen(true)
         } catch (e) {
@@ -119,9 +109,7 @@ function App() {
         console.log(e.target.name, e.target.value);
         let newObjectUser = newUser
         newObjectUser[e.target.name] = e.target.value
-        // setNewUser({...[],[e.target.name]:e.target.value});
         setNewUser(newObjectUser)
-        // console.log('n', newUser)
     }
     const handleFindUser = async (passId) => {
         try {
@@ -132,20 +120,16 @@ function App() {
             if(!data)  throw Error('user not fount')
             setFindUser(data)
             setErrorMessage('')
-
             setIsFindUserOpen(true)
             return data
-
         } catch (e) {
             console.log(e.message);
             setErrorMessage(e.message)
         }
     }
     const handleEditUser = async (passId) => {
-        // console.log('passId', passId)
         const user = await handleFindUser(passId);
         setNewUser(user)
-        // console.log('edit', newUser)
         setEditIsFormOpen(true);
     }
 
@@ -176,7 +160,6 @@ function App() {
             if(popUpTitle==='withdraw') submitFunction= ()=>withdraw(popUpId, popUpAmount);
             if(popUpTitle==='deposit') submitFunction= ()=>deposit(popUpId, popUpAmount);
             if(popUpTitle==='add credit') submitFunction= ()=>addCredit(popUpId, popUpAmount);
-
             return <PopupWindow title={popUpTitle}
                                 cancel={() => setIsPopUpWindow(false)}
                                 handleChange={handleChangePopUp}
@@ -185,10 +168,8 @@ function App() {
         }
     }
 
-
     const deposit = async (passId, amount) => {
         try {
-            // console.log('deposit', passId, amount)
             const {data} = await myApi.put(`/users/deposit/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
@@ -200,7 +181,6 @@ function App() {
     }
     const withdraw = async (passId, amount) => {
         try {
-            // console.log('withdraw', passId, amount)
             const {data} = await myApi.put(`/users/withdraw/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
@@ -214,7 +194,6 @@ function App() {
 
     const addCredit= async (passId, amount) => {
         try {
-            // console.log('add credit', passId, amount)
             const {data} = await myApi.put(`/users/add-credit/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
@@ -295,16 +274,18 @@ function App() {
             }
             if (findUser) {
                 return (
-                    <div className='card2 ' key={findUser._id}>
+                    <div className='find-user' key={findUser._id}>
                         <h3><u>User Found:</u></h3>
                         <h3><u>Name:</u> <span>{findUser.name}</span></h3>
                         <h4><u>Pass ID:</u> <span>{findUser.passId}</span></h4>
                         <h4><u>Cash: </u><span>{findUser.cash}</span></h4>
                         <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
                         <h4><u>Active:</u> <span>{findUser.active}</span></h4>
-                        <Button name="Delete" callback={() => handleDeleteUser(findUser._id)}/>
-                        <Button name="Edit"/>
-                        <Button name="Close" callback={() => setIsFindUserOpen(false)}/>
+                        <div>
+                            <Button className={"add-user"} name="Edit" callback={()=>handleEditUser(findUser.passId)}/>
+                            <Button className={"add-user delete2"} name="Delete" callback={() => handleDeleteUser(findUser._id)}/>
+                            <Button className={"add-user"} name="Close" callback={() => setIsFindUserOpen(false)}/>
+                        </div>
                     </div>)
             }
         }

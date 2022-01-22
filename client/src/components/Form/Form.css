@@ -15,10 +15,21 @@
     align-items: center;
     flex-direction: column;
     line-height: 1.5;
+    font-family: 'Lato', sans-serif;
+
 }
 label {
     margin-right:10px;
     font-size: calc(15px + 1vmin);
     letter-spacing: 2px;
 
+}
+
+.input {
+    padding:10px;
+    transition: 200ms ease-in-out;
+
+}
+.input:hover {
+    transform: scale(1.1);
 }

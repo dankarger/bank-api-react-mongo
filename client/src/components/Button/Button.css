@@ -23,9 +23,6 @@ button, h1, h2 {
 }
 
 .show-user-button {
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
     transition: 200ms ease-in-out;
     padding:2px 5px;
     cursor: pointer;
@@ -33,14 +30,46 @@ button, h1, h2 {
 .show-user-button:hover {
     transform: translateX(  20px);
     filter: brightness(90%);
+    cursor: pointer;
     /*box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;*/
 }
+.find {
+    transition: 200ms ease-in-out;
+    padding:2px 5px;
 
+}
+.find:hover {
+    transform: translateX(  5px);
+    filter: brightness(90%);
+    cursor: pointer;
+    /*box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;*/
+}
 .delete {
     background: rgba(255, 0, 0, 0.16);
 }
 .delete:hover {
     background: rgba(255, 40, 40, 0.55);
+}
+.delete2 {
+    background: rgb(239, 88, 88);
+    /*text-shadow: 1px 1px 1px black;*/
+}
+.delete2:hover {
+    background: rgb(255, 0, 0);
+    color:#90bac4;
+    text-shadow: 1px 1px 1px black;
+}
+.add-user {
+    padding:10px 15px;
+    margin:15px;
+    transition: 200ms ease-in-out;
+    font-size: calc(15px + 1vmin);
+}
+.add-user:hover {
+   cursor: pointer;
+    filter: brightness(90%);
+    transform: scale(1.1);
+
 }
 /*Responsive*/
 

@@ -123,9 +123,27 @@
 }
 
 
-.card2 {
-  background: #90bac4;
-  border:black 2px solid;
+.find-user {
+  /*background: #90bac4;*/
+  /*border:black 2px solid;*/
+  font-family: 'Lato', sans-serif;
+  background: rgb(41, 41, 44);
+  width:40%;
+  padding:1rem 2rem 3rem 1rem ;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:whitesmoke;
+  text-shadow: black 1px 1px;
+  border:5px solid #5475d0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  line-height: 1.5;
+  z-index: 100;
 }
 
 .divider {
