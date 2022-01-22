@@ -5,6 +5,7 @@ import Ui from "./components/Ui/Ui";
 import Button from "./components/Button/Button";
 import './App.css'
 import Form from "./components/Form/Form";
+import PopupWindow from "./components/PopUpWindow/PopupWindow";
 
 function App() {
     // const [user, setUser] = useState('');
@@ -14,8 +15,9 @@ function App() {
     const [isEditFormOpen, setEditIsFormOpen] = useState(false);
     const [isFindUserOpen, setIsFindUserOpen] = useState(false);
     const [newUser, setNewUser] = useState({});
-    const[editUser,setEditUser]=useState({});
+    const[withDrawAmount,setWithDrawAmount]=useState(Number);
     const [findUser, setFindUser] = useState({});
+    const[isPopUpWindow,setIsPopUpWindow]=useState(false);
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -65,6 +67,25 @@ function App() {
             setErrorMessage(e.message)
         }
     }
+
+    const handleSubmitFormEditUser = async () => {
+        setErrorMessage('')
+        try {
+            const {data} = await myApi.post('/users/edit-user',
+                {
+                    name: newUser.name,
+                    cash: newUser.cash,
+                    credit: newUser.credit,
+                    isActive: newUser.isActive === true ? "true" : "false"
+                })
+            setIsFormOpen(!isFormOpen)
+
+        } catch (e) {
+            console.log(e.message);
+            setErrorMessage(e.message)
+        }
+    }
+
     const handleCancelForm = () => {
         setIsFormOpen(false)
         setEditIsFormOpen(false)
@@ -91,7 +112,6 @@ function App() {
         // setNewUser({...[],[e.target.name]:e.target.value});
         setNewUser(newObjectUser)
         console.log('n', newUser)
-
     }
     const handleFindUser = async (passId) => {
         try {
@@ -107,18 +127,30 @@ function App() {
             setErrorMessage(e.message)
         }
     }
-
     const handleEditUser = async (passId) => {
         console.log('passId',passId)
         const user= await handleFindUser(passId);
         setNewUser(user)
         console.log('edit',newUser)
         setEditIsFormOpen(true);
-
-
     }
 
+    const handleWithdraw =(passId, amount) => {
+        setIsPopUpWindow(!isPopUpWindow);
 
+    }
+    const handleChaneWithDraw = (e)=>{
+        setWithDrawAmount(e.target.value)
+    }
+    const showPopUp=()=>{
+        if(isPopUpWindow) {
+            return <PopupWindow title='Withdraw'
+                                cancel={()=>setIsPopUpWindow(false)}
+                                handleChange={handleChaneWithDraw}
+
+                                />
+        }
+    }
 
     //Show Functions
 
@@ -135,6 +167,10 @@ function App() {
                             <h4>Active: <span>{user.isActive}</span></h4>
                             <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
                             <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
+                            <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
+                            {/*<Button name="Deposit" callback={() => handleDeposit(user.passId)}/>*/}
+                            {/*<Button name="Add Credit" callback={() => handleEditUser(user.passId)}/>*/}
+                            {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
                         </div>)
                 })
             }
@@ -147,6 +183,7 @@ function App() {
             return (
                 <div>
                     <Form submit={handleSubmitFormAddUser}
+                          submitEdit={handleSubmitFormEditUser}
                           cancel={handleCancelForm}
                           handleInputs={handleFormInputs}
                           title={'Add User'}
@@ -192,6 +229,7 @@ function App() {
         }
     }
 
+
     return (
         <div className='App'>
             <h1> Hello Master Bank Manager</h1>
@@ -206,6 +244,7 @@ function App() {
                 {showUsers()}
                 {showForm()}
                 {showEditForm()}
+                {showPopUp()}
             </div>
         </div>
     );

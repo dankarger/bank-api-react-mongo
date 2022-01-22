@@ -32,8 +32,8 @@ const deleteAllUsers = async () => {
 }
 
 const editUser = async (id, user ) => {
-    // const user = await User.findByIdAndUpdate({ _id: id }, { $set: { "details.discount": discount }}, { new: true })
-    const updatedUser = await User.replaceOne({_id: id}, {user});
+    const updatedUser = await User.findByIdAndUpdate({ _id: id }, { $set: { "details.discount": discount }}, { new: true })
+    // const updatedUser = await User.replaceOne({_id: id}, {user});
     return updatedUser
 }
 

@@ -55,8 +55,8 @@ const depositToUser = async (req, res) => {
 
 const updateUser = async function (req, res) {
     try {
-        const updatedUSer = await UserService.editUser(req.params.id, req.body);
-        res.status(200).send(updatedUSer);
+        const updatedUser = await UserService.editUser(req.params.id, req.body);
+        res.status(200).send(updatedUser);
     } catch (e) {
         res.status(400).send({error: e.message})
     }
