@@ -6,7 +6,7 @@ import Button from "./components/Button/Button";
 import './App.css'
 import Form from "./components/Form/Form";
 import PopupWindow from "./components/PopUpWindow/PopupWindow";
-
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 function App() {
     // const [user, setUser] = useState('');
@@ -70,8 +70,8 @@ function App() {
             setIsFormOpen(!isFormOpen)
 
         } catch (e) {
-            console.log(e.message);
-            setErrorMessage(e.message)
+            console.log(e);
+            setErrorMessage(e)
         }
     }
 
@@ -232,7 +232,7 @@ function App() {
                             <h4>Pass ID: <span>{user.passId}</span></h4>
                             <h4>Cash: <span>{user.cash}</span></h4>
                             <h4>Credit: <span>{user.credit}</span></h4>
-                            <h4>Active: <span>{user.isActive}</span></h4>
+                            <h4>Active: <span>{user.active}</span></h4>
                             <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
                             <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
                             <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
@@ -287,7 +287,7 @@ function App() {
                         <h4><u>Pass ID:</u> <span>{findUser.passId}</span></h4>
                         <h4><u>Cash: </u><span>{findUser.cash}</span></h4>
                         <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
-                        <h4><u>Active:</u> <span>{findUser.isActive}</span></h4>
+                        <h4><u>Active:</u> <span>{findUser.active}</span></h4>
                         <Button name="Delete" callback={() => handleDeleteUser(findUser._id)}/>
                         <Button name="Edit"/>
                         <Button name="Close" callback={() => setIsFindUserOpen(false)}/>
@@ -298,22 +298,24 @@ function App() {
 
 
     return (
-        <div className='App'>
-            <h1> Hello Master Bank Manager</h1>
-            <h2>Users: {users.length}</h2>
-            {errorMessage}
-            <div>
+        <ErrorBoundary>
+            <div className='App'>
+                <h1> Hello Master Bank Manager</h1>
+                <h2>Users: {users.length}</h2>
+                {errorMessage}
+                <div>
+                </div>
+                {/*<button onClick={() => getReq()}>get</button>*/}
+                <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
+                <div>
+                    {showFindUser()}
+                    {showUsers()}
+                    {showForm()}
+                    {showEditForm()}
+                    {showPopUp()}
+                </div>
             </div>
-            {/*<button onClick={() => getReq()}>get</button>*/}
-            <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
-            <div>
-                {showFindUser()}
-                {showUsers()}
-                {showForm()}
-                {showEditForm()}
-                {showPopUp()}
-            </div>
-        </div>
+        </ErrorBoundary>
     );
 }
 

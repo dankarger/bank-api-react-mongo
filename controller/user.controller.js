@@ -10,8 +10,10 @@ const getUsers = async function (req, res) {
     }
 }
 
+
 const getUser = async function (req, res) {
     try {
+        if(req.params.passId<0) { return Error('Error passPort ') }
         const user = await UserService.getUser(req.params.passId);
         console.log('find', user)
         res.status(200).send(user);
@@ -87,12 +89,12 @@ const withdraw = async function (req, res) {
             const updatedUser = await UserService.withDraw(passId, amount)
             // res.status(201).send({message: `withdrawn ${amount} shmeckles from id ${id}`})
             res.status(201).send(updatedUser)
-
         } catch (err) {
             res.status(400).json({message: err})
         }
     }
 }
+
 module.exports = {
     getUsers,
     addUser,
