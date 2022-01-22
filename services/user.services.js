@@ -56,9 +56,7 @@ const editUser = async (id, user ) => {
 const depositToUser = async (id, amount) => {
     const user = await User.findOneAndUpdate({passportId : id}, {$inc : {cash: amount}})
     return user
-
 }
-
 
 const changeActiveUser = async (id, isActive ) => {
     const user = await User.findByIdAndUpdate({ _id: id }, { $set: { isActive: isActive }}, { new: true })
@@ -70,6 +68,10 @@ const filterUsers = async (min, max) => {
     return user
 }
 
+const addCredit = async (passId, amount) => {
+    const user = await User.findOneAndUpdate({passportId : passId}, {$inc : {credit: amount}})
+    return user
+}
 module.exports = {
     getUsers,
     addUser,
@@ -80,6 +82,7 @@ module.exports = {
     editUser,
     changeActiveUser,
     filterUsers,
-    depositToUser
+    depositToUser,
+    addCredit
 
 }

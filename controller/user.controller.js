@@ -61,12 +61,23 @@ const updateUser = async function (req, res) {
     }
 }
 
+const addCredit = async function (req, res) {
+    try {
+        const {id} = req.body;
+        const {amount} = req.body;
+        const updatedUser = await UserService.addCredit(id, amount);
+        res.status(200).send(updatedUser);
+    } catch (e) {
+        res.status(400).send({error: e.message})
+    }
+}
 module.exports = {
     getUsers,
     addUser,
     deleteUser,
     getUser,
     updateUser,
-    depositToUser
+    depositToUser,
+    addCredit
 
 }
