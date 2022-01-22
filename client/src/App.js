@@ -21,7 +21,7 @@ function App() {
     const [isPopUpWindow, setIsPopUpWindow] = useState(false);
     const [popUpTitle, setPopUpTitle] = useState('')
     const [popUpId, setPopUpId] = useState(Number)
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState({});
     const [renderPage, setRenderPage] = useState(false)
 
 
@@ -40,12 +40,12 @@ function App() {
         setErrorMessage('')
         try {
             const {data} = await myApi.get('/users/get-users')
-            console.log('data', data)
+            // console.log('data', data)
             setUsers(data)
             setIsDataOpen(!isDataOpen)
         } catch (e) {
             console.log(e.message);
-            setErrorMessage(e.message)
+            setErrorMessage({e})
         }
     };
     const addUser = async () => {
@@ -56,7 +56,7 @@ function App() {
     const handleSubmitFormAddUser = async () => {
         setErrorMessage('')
         try {
-            console.log('new', newUser)
+            // console.log('new', newUser)
             const {passId, name, cash, credit} = newUser
 
             const {data} = await myApi.post('/users/add-user',
@@ -70,8 +70,8 @@ function App() {
             setIsFormOpen(!isFormOpen)
 
         } catch (e) {
-            console.log(e);
-            setErrorMessage(e)
+            console.log({e});
+            setErrorMessage({e})
         }
     }
 
@@ -101,9 +101,9 @@ function App() {
     const handleDeleteUser = async (id) => {
         // setErrorMessage('')
         try {
-            console.log('id', id)
+            // console.log('id', id)
             const user = await myApi.delete(`/users/delete-user/${id}`)
-            console.log('1', user)
+            // console.log('1', user)
             setUsers(getReq());
             setIsDataOpen(true)
         } catch (e) {
@@ -118,7 +118,7 @@ function App() {
         newObjectUser[e.target.name] = e.target.value
         // setNewUser({...[],[e.target.name]:e.target.value});
         setNewUser(newObjectUser)
-        console.log('n', newUser)
+        // console.log('n', newUser)
     }
     const handleFindUser = async (passId) => {
         try {
@@ -135,10 +135,10 @@ function App() {
         }
     }
     const handleEditUser = async (passId) => {
-        console.log('passId', passId)
+        // console.log('passId', passId)
         const user = await handleFindUser(passId);
         setNewUser(user)
-        console.log('edit', newUser)
+        // console.log('edit', newUser)
         setEditIsFormOpen(true);
     }
 
@@ -181,7 +181,7 @@ function App() {
 
     const deposit = async (passId, amount) => {
         try {
-            console.log('deposit', passId, amount)
+            // console.log('deposit', passId, amount)
             const {data} = await myApi.put(`/users/deposit/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
@@ -193,7 +193,7 @@ function App() {
     }
     const withdraw = async (passId, amount) => {
         try {
-            console.log('withdraw', passId, amount)
+            // console.log('withdraw', passId, amount)
             const {data} = await myApi.put(`/users/withdraw/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
@@ -207,7 +207,7 @@ function App() {
 
     const addCredit= async (passId, amount) => {
         try {
-            console.log('add credit', passId, amount)
+            // console.log('add credit', passId, amount)
             const {data} = await myApi.put(`/users/add-credit/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
@@ -215,7 +215,7 @@ function App() {
 
         } catch (e) {
             console.log(e.message);
-            setErrorMessage(e.message)
+            setErrorMessage({e})
         }
 
     }
@@ -299,10 +299,17 @@ function App() {
 
     return (
         <ErrorBoundary>
+            <div className='ErrorsDiv'>
+            {errorMessage.length && (
+                <ul>
+                    {errorMessage.map(error => <li>{error.join(" ")}</li>) }
+                </ul>
+            )}
+            </div>
             <div className='App'>
                 <h1> Hello Master Bank Manager</h1>
                 <h2>Users: {users.length}</h2>
-                {errorMessage}
+                {/*{errorMessage}*/}
                 <div>
                 </div>
                 {/*<button onClick={() => getReq()}>get</button>*/}
