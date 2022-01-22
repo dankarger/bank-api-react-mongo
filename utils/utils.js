@@ -1,8 +1,10 @@
 const User = require('./../models/user.model')
 
-const checkUserCredit = async (passId, cashToWithdraw) => {
-    const user = await User.findOne({passId : passId})
-    return (user.cash - cashToWithdraw > -user.credit)
+const checkUserCredit = async (passId, amount) => {
+    const user = await User.findOne({passId : passId});
+    console.log('user',user)
+     // if(user.cash - amount > user.credit)
+     return true
 }
 
 
