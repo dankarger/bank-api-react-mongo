@@ -236,18 +236,21 @@ function App() {
                     return (
 
                         <div className='card' key={user._id}>
-                            <p className="item">Name: <span>{user.name}</span></p>
-                            <p className="item">Pass ID: <span>{user.passId}</span></p>
-                            <p className="item">Cash: <span>{user.cash}</span></p>
-                            <p className="item">Credit: <span>{user.credit}</span></p>
-                            <p className="item">Active: <span>{user.active}</span></p>
+                            <div className="items-div">
+                                <p className="item">Name: <span>{user.name}</span></p>
+                                <p className="item">Pass ID: <span>{user.passId}</span></p>
+                                <p className="item">Cash: <span>{user.cash}</span></p>
+                                <p className="item">Credit: <span>{user.credit}</span></p>
+                                <p className="item">Active: <span>{user.active}</span></p>
+                            </div>
                             <div className="buttons-div">
-                                <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
-                                <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
-                                <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
-                                <Button name="Deposit" callback={() => handleDeposit(user.passId)}/>
-                                <Button name="Add Credit" callback={() => handleAddCredit(user.passId)}/>
-                            {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
+                                <Button className={'show-user-button'} name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
+                                <Button className={'show-user-button'} name="Deposit" callback={() => handleDeposit(user.passId)}/>
+                                <Button className={'show-user-button'} name="Add Credit" callback={() => handleAddCredit(user.passId)}/>
+                                <Button className={'show-user-button'} name="Edit" callback={() => handleEditUser(user.passId)}/>
+                                <Button className={'show-user-button delete'} name="Delete" callback={() => handleDeleteUser(user._id)}/>
+
+                                {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
                             </div>
                         </div>
                     )
@@ -310,17 +313,16 @@ function App() {
 
     return (
         <ErrorBoundary>
-            {/*<div className='ErrorsDiv'>*/}
-            {/*{errorMessage.length && (*/}
-            {/*    <ul>*/}
-            {/*        {errorMessage.map(error => <li>{error.join(" ")}</li>) }*/}
-            {/*    </ul>*/}
-            {/*)}*/}
-            {/*</div>*/}
             <div className='App'>
-                <h1> Hello Master Bank Manager</h1>
-                <h2>Users: {users.length}</h2>
-                {errorMessage}
+                <div className="heading">
+                    <h1> Welcome to Bank Manager</h1>
+                    <h2>Users: {users.length}</h2>
+                </div>
+
+                <div className="error-div">
+                    {errorMessage}
+                </div>
+
                 <div>
                 </div>
                 {/*<button onClick={() => getReq()}>get</button>*/}
@@ -328,7 +330,10 @@ function App() {
                 <div>
                     {/*<ListTable />*/}
                     {showFindUser()}
-                    {showUsers()}
+                    <div className="show-users">
+                        {showUsers()}
+                    </div>
+
                     {showForm()}
                     {showEditForm()}
                     {showPopUp()}

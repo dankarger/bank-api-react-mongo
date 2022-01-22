@@ -1,9 +1,47 @@
 button, h1, h2 {
     /*font-family: 'Dongle', sans-serif;*/
-    font-family: 'Playfair Display', serif;
+    /*font-family: 'Playfair Display', serif;*/
+    font-family: 'Lato', sans-serif;
+
+}
+.button-ui {
+    background: #282c34;
+    background: #324264;
+    color: whitesmoke;
+    padding:10px 25px;
+    /*font-size: calc(5rem + 0.5vm);*/
+    font-weight: 600;
+    letter-spacing: 2px;
+    border-radius:5px;
+    transition: 200ms ease-in-out;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;}
+.button-ui:hover {
+    cursor: pointer;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;*/
+    background: #455b8c;
 }
 
+.show-user-button {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    transition: 200ms ease-in-out;
+    padding:2px 5px;
+    cursor: pointer;
+}
+.show-user-button:hover {
+    transform: translateX(  20px);
+    filter: brightness(90%);
+    /*box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;*/
+}
 
+.delete {
+    background: rgba(255, 0, 0, 0.16);
+}
+.delete:hover {
+    background: rgba(255, 40, 40, 0.55);
+}
 /*Responsive*/
 
 @media only screen and (max-width: 1000px) {

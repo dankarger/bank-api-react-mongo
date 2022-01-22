@@ -10,14 +10,14 @@ const Ui=({getusers, addUser,findUser})=>{
             setPassId(e.target.value)
     }
     return (
-        <div>
-            ui
-            <Button callback={getusers} name='Get Users' />
-            <Button callback={addUser} name='Add User' />
+        <div className="ui">
+
+            <Button className={'button-ui'} callback={getusers} name='Get Users' />
+            <Button className={'button-ui'} callback={addUser} name='Add User' />
             {/*<Button callback={findUser} name='Find User' />*/}
             <label htmlFor="findUser">passId</label>
-            <input onChange={handleSearchChange} type="text" name="findUser" value={passId}/>
-            <button onClick={()=>findUser(passId)} > Find</button>
+            <input onChange={handleSearchChange} type="text" name="findUser" value={passId} placeholder={"Passport Id"}/>
+            <button className={'button-ui'} onClick={()=>findUser(passId)} > Find</button>
         </div>
     )
 }
