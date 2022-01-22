@@ -1,12 +1,15 @@
 // import { useState } from 'react';
+import './App.css'
 import myApi from './api/Api';
 import React, {useEffect, useState} from "react";
 import Ui from "./components/Ui/Ui";
 import Button from "./components/Button/Button";
-import './App.css'
 import Form from "./components/Form/Form";
 import PopupWindow from "./components/PopUpWindow/PopupWindow";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+// import ListTable from "./components/List/List";
+
+
 
 function App() {
     // const [user, setUser] = useState('');
@@ -21,7 +24,7 @@ function App() {
     const [isPopUpWindow, setIsPopUpWindow] = useState(false);
     const [popUpTitle, setPopUpTitle] = useState('')
     const [popUpId, setPopUpId] = useState(Number)
-    const [errorMessage, setErrorMessage] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
     const [renderPage, setRenderPage] = useState(false)
 
 
@@ -122,10 +125,14 @@ function App() {
     }
     const handleFindUser = async (passId) => {
         try {
+            if(passId<1){
+                throw Error('PassPort ID cant be less than 1')
+            }
             const {data} = await myApi.get(`/users/get-user/${passId}`)
+            if(!data)  throw Error('user not fount')
             setFindUser(data)
-            console.log('g', data)
-            // setIsDataOpen(false)
+            setErrorMessage('')
+
             setIsFindUserOpen(true)
             return data
 
@@ -215,7 +222,7 @@ function App() {
 
         } catch (e) {
             console.log(e.message);
-            setErrorMessage({e})
+            setErrorMessage(e)
         }
 
     }
@@ -227,19 +234,23 @@ function App() {
             if (users.length > 0) {
                 return users.map(user => {
                     return (
+
                         <div className='card' key={user._id}>
-                            <h3>Name: <span>{user.name}</span></h3>
-                            <h4>Pass ID: <span>{user.passId}</span></h4>
-                            <h4>Cash: <span>{user.cash}</span></h4>
-                            <h4>Credit: <span>{user.credit}</span></h4>
-                            <h4>Active: <span>{user.active}</span></h4>
-                            <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
-                            <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
-                            <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
-                            <Button name="Deposit" callback={() => handleDeposit(user.passId)}/>
-                            <Button name="Add Credit" callback={() => handleAddCredit(user.passId)}/>
+                            <p className="item">Name: <span>{user.name}</span></p>
+                            <p className="item">Pass ID: <span>{user.passId}</span></p>
+                            <p className="item">Cash: <span>{user.cash}</span></p>
+                            <p className="item">Credit: <span>{user.credit}</span></p>
+                            <p className="item">Active: <span>{user.active}</span></p>
+                            <div className="buttons-div">
+                                <Button name="Delete" callback={() => handleDeleteUser(user._id)}/>
+                                <Button name="Edit" callback={() => handleEditUser(user.passId)}/>
+                                <Button name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
+                                <Button name="Deposit" callback={() => handleDeposit(user.passId)}/>
+                                <Button name="Add Credit" callback={() => handleAddCredit(user.passId)}/>
                             {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
-                        </div>)
+                            </div>
+                        </div>
+                    )
                 })
             }
         }
@@ -299,22 +310,23 @@ function App() {
 
     return (
         <ErrorBoundary>
-            <div className='ErrorsDiv'>
-            {errorMessage.length && (
-                <ul>
-                    {errorMessage.map(error => <li>{error.join(" ")}</li>) }
-                </ul>
-            )}
-            </div>
+            {/*<div className='ErrorsDiv'>*/}
+            {/*{errorMessage.length && (*/}
+            {/*    <ul>*/}
+            {/*        {errorMessage.map(error => <li>{error.join(" ")}</li>) }*/}
+            {/*    </ul>*/}
+            {/*)}*/}
+            {/*</div>*/}
             <div className='App'>
                 <h1> Hello Master Bank Manager</h1>
                 <h2>Users: {users.length}</h2>
-                {/*{errorMessage}*/}
+                {errorMessage}
                 <div>
                 </div>
                 {/*<button onClick={() => getReq()}>get</button>*/}
                 <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
                 <div>
+                    {/*<ListTable />*/}
                     {showFindUser()}
                     {showUsers()}
                     {showForm()}

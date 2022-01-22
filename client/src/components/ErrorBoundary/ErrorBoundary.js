@@ -3,7 +3,7 @@ import {Component} from "react";
 export default class ErrorBoundary extends Component {
     constructor(props) {
         super(props);
-        this.state = { hasError: false };
+        this.state = { hasError: false, errorInfo:'' };
     }
 
     static getDerivedStateFromError(error) {
@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component {
         // logErrorToMyService(error, errorInfo);
         this.setState({
             hasError: true,
-            // errorInfo: errorInfo
+            errorInfo: errorInfo
         })
         console.log('error',errorInfo)
     }
