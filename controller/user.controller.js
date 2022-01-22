@@ -23,7 +23,7 @@ const getUser = async function (req, res) {
 const addUser = async function (req, res) {
     try {
         const users = await UserService.addUser(req, res);
-        console.log('user', users)
+        console.log('user-add', users)
         res.status(200).send(users);
     } catch (e) {
         res.status(400).send({error: e.message})
@@ -76,6 +76,7 @@ const addCredit = async function (req, res) {
 const withdraw = async function (req, res) {
     const {amount} = req.body
     const {passId} = req.params
+    console.log('withdraw',amount,passId)
     const isUserCredit = await utils.checkUserCredit(passId, amount)
     if (!isUserCredit) res.status(200).send({message: 'the user cant withdraw '})
     else {
