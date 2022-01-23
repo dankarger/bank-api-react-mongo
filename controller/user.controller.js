@@ -73,6 +73,7 @@ const updateUser = async function (req, res) {
 
 const addCredit = async function (req, res) {
     try {
+        console.log('REQ',req.params)
         const {id} = req.params;
         const {amount} = req.body;
         // if(!id)throw new Error('')
