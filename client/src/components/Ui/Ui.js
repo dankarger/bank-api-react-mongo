@@ -11,18 +11,21 @@ const Ui=({getusers, addUser,findUser})=>{
     }
     return (
         <div className="ui">
-
-            <Button className={'button-ui'} callback={getusers} name='Get Users' />
+            {/*<Button className={'button-ui'} callback={getusers} name='Get Users' />*/}
             <Button className={'button-ui'} callback={addUser} name='Add User' />
-            {/*<Button callback={findUser} name='Find User' />*/}
-            <label htmlFor="findUser">search</label>
-            <input onChange={handleSearchChange}
-                   type="number"
-                   name="findUser"
-                   value={passId}
-                   placeholder='test'
-                   min="0" />
-            <button className={'button-ui'} onClick={()=>findUser(passId)} > Find</button>
+            <div className="search-bar">
+                 <label htmlFor="findUser">search (Enter passport ID)</label>
+                <div className='search-button'>
+                        <input onChange={handleSearchChange}
+                               type="number"
+                               name="findUser"
+                               value={passId}
+                               placeholder='test'
+                               min="0" />
+
+                    <button className={'button-ui search'} onClick={()=>findUser(passId)} > Search</button>
+                </div>
+            </div>
         </div>
     )
 }

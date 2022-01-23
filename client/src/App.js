@@ -59,7 +59,7 @@ function App() {
                     passId: newUser.passId,
                     cash: newUser.cash,
                     credit: newUser.credit,
-                    isActive: newUser.isActive === true ? "true" : "false"
+                    isActive: newUser.active === true ? "true" : "false"
                 })
             setIsFormOpen(!isFormOpen)
         } catch (e) {
@@ -208,7 +208,7 @@ function App() {
 
     //Show Functions
     const showUsers = () => {
-        if (isDataOpen) {
+        // if (isDataOpen) {
             if (users.length > 0) {
                 return users.map(user => {
                     return (
@@ -233,7 +233,7 @@ function App() {
                     )
                 })
             }
-        }
+        // }
     }
 
     const showForm = () => {

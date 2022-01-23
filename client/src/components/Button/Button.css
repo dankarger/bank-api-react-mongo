@@ -22,6 +22,19 @@ button, h1, h2 {
     background: #455b8c;
 }
 
+.search {
+    transition: 200ms ease-in-out;
+    padding:6px 15px;
+    background: #b47d18;
+    background: #5475d0;
+}
+.search:hover {
+    cursor: pointer;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;*/
+    background: #6c8c45;
+}
+
+
 .show-user-button {
     transition: 200ms ease-in-out;
     padding:2px 5px;
@@ -44,6 +57,7 @@ button, h1, h2 {
     cursor: pointer;
     /*box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;*/
 }
+
 .delete {
     background: rgb(241, 161, 161);
 }
