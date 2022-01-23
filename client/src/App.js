@@ -16,7 +16,7 @@ function App() {
     const [isEditFormOpen, setEditIsFormOpen] = useState(false);
     const [isFindUserOpen, setIsFindUserOpen] = useState(false);
     const [newUser, setNewUser] = useState({});
-    const [popUpAmount, setPopUpAmount] = useState(Number);
+    const [popUpAmount, setPopUpAmount] = useState(0);
     const [findUser, setFindUser] = useState({});
     const [isPopUpWindow, setIsPopUpWindow] = useState(false);
     const [popUpTitle, setPopUpTitle] = useState('')

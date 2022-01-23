@@ -24,11 +24,6 @@ const getUser = async function (req, res) {
 
 const addUser = async function (req, res) {
     try {
-        // if(await UserService.getUser(req.params.passId)) throw new Error('User all ready exist')
-        // if(!req.body.name) throw new Error('Must enter Name');
-        // if(!req.body.passId) throw new Error('Must enter Passport Id');
-        // if(!req.body.cash) throw new Error('Must enter Cash amount');
-        // if(!req.body.credit) throw new Error('Must enter Credit amount')
         utils.checkBodyRequest(req);
         const users = await UserService.addUser(req, res);
         console.log('user-add', users)
@@ -55,6 +50,8 @@ const deleteUser = async function (req, res) {
 const depositToUser = async (req, res) => {
     const {id} = req.params
     const {amount} = req.body
+    console.log('amouht',amount)
+    if(!amount)  res.status(400).json({message: "Amount can't be empty"})
     try {
         const deposit = await UserService.depositToUser(id, amount)
         // res.status(200).json({message: `deposit ${amount}  to user id ${id}`})
@@ -78,6 +75,7 @@ const addCredit = async function (req, res) {
     try {
         const {id} = req.params;
         const {amount} = req.body;
+        // if(!id)throw new Error('')
         const updatedUser = await UserService.addCredit(id, amount);
         res.status(200).send(updatedUser);
     } catch (e) {

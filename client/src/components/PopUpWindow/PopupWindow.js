@@ -12,6 +12,7 @@ const PopupWindow = ({title,submit,cancel,handleChange})=> {
                    step="5"
                    min="0"
                     placeholder='Amount'
+
             />
             <Button className='pop-up green' callback={submit} name='Submit' />
             <Button className='pop-up' callback={cancel} name='Cancel' />
