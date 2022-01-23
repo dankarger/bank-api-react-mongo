@@ -274,12 +274,14 @@ function App() {
             if (findUser) {
                 return (
                     <div className='find-user' key={findUser._id}>
+                        <div className='info'>
                         <h3><u>User Found:</u></h3>
                         <h3><u>Name:</u> <span>{findUser.name}</span></h3>
                         <h4><u>Pass ID:</u> <span>{findUser.passId}</span></h4>
                         <h4><u>Cash: </u><span>{findUser.cash}</span></h4>
                         <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
                         <h4><u>Active:</u> <span>{findUser.active}</span></h4>
+                        </div>
                         <div>
                             <Button className={"add-user"} name="Edit" callback={()=>handleEditUser(findUser.passId)}/>
                             <Button className={"add-user delete2"} name="Delete" callback={() => handleDeleteUser(findUser._id)}/>

@@ -20,6 +20,8 @@ button, h1, h2 {
     cursor: pointer;
     /*box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;*/
     background: #455b8c;
+    background: #6c8c45;
+
 }
 
 .search {
