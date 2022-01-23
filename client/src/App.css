@@ -199,6 +199,18 @@
   width: 100%;
   background: rgba(225, 36, 36, 0.39);
 }
+
+.error-div-bottom {
+  color: #9d0d0d;
+  text-shadow: #282c34 1px 1px 1px ;
+  font-size: calc(1rem + 1vw);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: rgba(255, 121, 121, 0.95);
+  position: fixed;
+  bottom: 0;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -314,6 +314,9 @@ function App() {
                     {showPopUp()}
                 </div>
             </div>
+            <div className="error-div-bottom">
+                {errorMessage}
+            </div>
         </ErrorBoundary>
     );
 }

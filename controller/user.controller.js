@@ -51,8 +51,8 @@ const depositToUser = async (req, res) => {
     const {id} = req.params
     const {amount} = req.body
     console.log('amouht',amount)
-    if(!amount)  res.status(400).json({message: "Amount can't be empty"})
     try {
+        if(!amount)  res.status(400).json({message: "Amount can't be empty"})
         const deposit = await UserService.depositToUser(id, amount)
         // res.status(200).json({message: `deposit ${amount}  to user id ${id}`})
         res.status(200).send(deposit)
