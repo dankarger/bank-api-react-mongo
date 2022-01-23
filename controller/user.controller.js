@@ -10,7 +10,6 @@ const getUsers = async function (req, res) {
     }
 }
 
-
 const getUser = async function (req, res) {
     try {
         if(req.params.passId<0) { throw new Error('Error passPort ') }
@@ -51,9 +50,7 @@ const depositToUser = async (req, res) => {
     try {
         if(!amount)  res.status(400).json({message: "Amount can't be empty"})
         const deposit = await UserService.depositToUser(id, amount)
-        // res.status(200).json({message: `deposit ${amount}  to user id ${id}`})
         res.status(200).send(deposit)
-
     } catch (err) {
         res.status(400).json({message: err})
     }
@@ -92,7 +89,6 @@ const withdraw = async function (req, res) {
     else {
         try {
             const updatedUser = await UserService.withDraw(passId, amount)
-            // res.status(201).send({message: `withdrawn ${amount} shmeckles from id ${id}`})
             res.status(201).send(updatedUser)
         } catch (err) {
             res.status(400).json({message: err})

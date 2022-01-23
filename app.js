@@ -1,12 +1,8 @@
 const express = require('express');
 require("dotenv").config();
 require("./db/mongoose")
-const mongoose = require('mongoose');
-
-//
 const cors = require('cors');
 const path = require('path');
-//
 const app = express();
 const port = process.env.PORT || 5000;
 const userRoute = require('./routes/userRoute')
@@ -15,7 +11,7 @@ let publicPath = path.join(__dirname, 'client/build')
 if(port===5000){
     publicPath = path.join(__dirname, 'client/public')
 }
-// const URL= process.env.URL_MONGO;
+
 
 app.use(cors());
 app.use(express.static(publicPath));

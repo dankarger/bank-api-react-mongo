@@ -6,6 +6,7 @@
 
 Features:
 - Node server - (Backend)
+- Express - (BackEnd)
 - React - (FrontEnd)
 - MongoDB - (DataBase)
 

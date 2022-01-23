@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import './App.css'
 import myApi from './api/Api';
 import React, {useEffect, useState} from "react";
@@ -9,7 +8,6 @@ import PopupWindow from "./components/PopUpWindow/PopupWindow";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 function App() {
-    // const [user, setUser] = useState('');
     const [users, setUsers] = useState([]);
     const [isDataOpen, setIsDataOpen] = useState(true);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -52,7 +50,7 @@ function App() {
     const handleSubmitFormAddUser = async () => {
         setErrorMessage('')
         try {
-        window.confirm("Are you sure you want to add user?")
+            window.confirm("Are you sure you want to add user?")
             const {data} = await myApi.post('/users/add-user',
                 {
                     name: newUser.name,
@@ -62,7 +60,7 @@ function App() {
                     isActive: newUser.active === true ? "true" : "false"
                 })
             setIsFormOpen(!isFormOpen);
-        setRenderPage(!renderPage);
+            setRenderPage(!renderPage);
         } catch (e) {
             console.log({e});
             setErrorMessage(e.response.data.message)
@@ -113,11 +111,11 @@ function App() {
 
     const handleFindUser = async (passId) => {
         try {
-            if(passId<1){
+            if (passId < 1) {
                 throw Error('PassPort ID cant be less than 1')
             }
             const {data} = await myApi.get(`/users/get-user/${passId}`)
-            if(!data)   return setErrorMessage('User not found')
+            if (!data) return setErrorMessage('User not found')
             setFindUser(data)
             setErrorMessage('')
             setIsFindUserOpen(true)
@@ -158,9 +156,9 @@ function App() {
     const showPopUp = () => {
         if (isPopUpWindow) {
             let submitFunction
-            if(popUpTitle==='withdraw') submitFunction= ()=>withdraw(popUpId, popUpAmount);
-            if(popUpTitle==='deposit') submitFunction= ()=>deposit(popUpId, popUpAmount);
-            if(popUpTitle==='add credit') submitFunction= ()=>addCredit(popUpId, popUpAmount);
+            if (popUpTitle === 'withdraw') submitFunction = () => withdraw(popUpId, popUpAmount);
+            if (popUpTitle === 'deposit') submitFunction = () => deposit(popUpId, popUpAmount);
+            if (popUpTitle === 'add credit') submitFunction = () => addCredit(popUpId, popUpAmount);
             return <PopupWindow title={popUpTitle}
                                 cancel={() => setIsPopUpWindow(false)}
                                 handleChange={handleChangePopUp}
@@ -187,14 +185,13 @@ function App() {
             setRenderPage(!renderPage);
             setIsPopUpWindow(false);
             return data
-
         } catch (e) {
             console.log(e.response);
             setErrorMessage(e.response.data.message)
         }
     }
 
-    const addCredit= async (passId, amount) => {
+    const addCredit = async (passId, amount) => {
         try {
             const {data} = await myApi.put(`/users/add-credit/${passId}`, {amount: amount})
             setRenderPage(!renderPage);
@@ -209,32 +206,32 @@ function App() {
 
     //Show Functions
     const showUsers = () => {
-        // if (isDataOpen) {
-            if (users.length > 0) {
-                return users.map(user => {
-                    return (
-                        <div className='card' key={user._id}>
-                            <div className="items-div">
-                                <p className="item">Name: <span>{user.name}</span></p>
-                                <p className="item">Pass ID: <span>{user.passId}</span></p>
-                                <p className="item">Cash: <span>{user.cash}</span></p>
-                                <p className="item">Credit: <span>{user.credit}</span></p>
-                                {/*<p className="item">Active: <span>{user.active}</span></p>*/}
-                            </div>
-                            <div className="buttons-div">
-                                <Button className={'show-user-button'} name="Withdraw" callback={() => handleWithdraw(user.passId)}/>
-                                <Button className={'show-user-button'} name="Deposit" callback={() => handleDeposit(user.passId)}/>
-                                <Button className={'show-user-button'} name="Add Credit" callback={() => handleAddCredit(user.passId)}/>
-                                <Button className={'show-user-button'} name="Edit" callback={() => handleEditUser(user.passId)}/>
-                                <Button className={'show-user-button delete'} name="Delete" callback={() => handleDeleteUser(user._id)}/>
-
-                                {/*<Button name="Transfer" callback={() => handleEditUser(user.passId)}/>*/}
-                            </div>
+        if (users.length > 0) {
+            return users.map(user => {
+                return (
+                    <div className='card' key={user._id}>
+                        <div className="items-div">
+                            <p className="item">Name: <span>{user.name}</span></p>
+                            <p className="item">Pass ID: <span>{user.passId}</span></p>
+                            <p className="item">Cash: <span>{user.cash}</span></p>
+                            <p className="item">Credit: <span>{user.credit}</span></p>
                         </div>
-                    )
-                })
-            }
-        // }
+                        <div className="buttons-div">
+                            <Button className={'show-user-button'} name="Withdraw"
+                                    callback={() => handleWithdraw(user.passId)}/>
+                            <Button className={'show-user-button'} name="Deposit"
+                                    callback={() => handleDeposit(user.passId)}/>
+                            <Button className={'show-user-button'} name="Add Credit"
+                                    callback={() => handleAddCredit(user.passId)}/>
+                            <Button className={'show-user-button'} name="Edit"
+                                    callback={() => handleEditUser(user.passId)}/>
+                            <Button className={'show-user-button delete'} name="Delete"
+                                    callback={() => handleDeleteUser(user._id)}/>
+                        </div>
+                    </div>
+                )
+            })
+        }
     }
 
     const showForm = () => {
@@ -275,16 +272,18 @@ function App() {
                 return (
                     <div className='find-user' key={findUser._id}>
                         <div className='info'>
-                        <h3><u>User Found:</u></h3>
-                        <h3><u>Name:</u> <span>{findUser.name}</span></h3>
-                        <h4><u>Pass ID:</u> <span>{findUser.passId}</span></h4>
-                        <h4><u>Cash: </u><span>{findUser.cash}</span></h4>
-                        <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
-                        <h4><u>Active:</u> <span>{findUser.active}</span></h4>
+                            <h3><u>User Found:</u></h3>
+                            <h3><u>Name:</u> <span>{findUser.name}</span></h3>
+                            <h4><u>Pass ID:</u> <span>{findUser.passId}</span></h4>
+                            <h4><u>Cash: </u><span>{findUser.cash}</span></h4>
+                            <h4><u>Credit:</u> <span>{findUser.credit}</span></h4>
+                            <h4><u>Active:</u> <span>{findUser.active}</span></h4>
                         </div>
                         <div>
-                            <Button className={"add-user"} name="Edit" callback={()=>handleEditUser(findUser.passId)}/>
-                            <Button className={"add-user delete2"} name="Delete" callback={() => handleDeleteUser(findUser._id)}/>
+                            <Button className={"add-user"} name="Edit"
+                                    callback={() => handleEditUser(findUser.passId)}/>
+                            <Button className={"add-user delete2"} name="Delete"
+                                    callback={() => handleDeleteUser(findUser._id)}/>
                             <Button className={"add-user"} name="Close" callback={() => setIsFindUserOpen(false)}/>
                         </div>
                     </div>)

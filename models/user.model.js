@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
-
     passId: {
         type: Number,
         require:true,
