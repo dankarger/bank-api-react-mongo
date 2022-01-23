@@ -71,10 +71,10 @@ const updateUser = async function (req, res) {
 const addCredit = async function (req, res) {
     try {
         console.log('REQ',req.params)
-        const {id} = req.params;
+        const {passId} = req.params;
         const {amount} = req.body;
         // if(!id)throw new Error('')
-        const updatedUser = await UserService.addCredit(id, amount);
+        const updatedUser = await UserService.addCredit(passId, amount);
         res.status(200).send(updatedUser);
     } catch (e) {
         res.status(400).json({message: e.message})
