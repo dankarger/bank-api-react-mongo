@@ -3,7 +3,7 @@ import './Ui.css'
 import Button from "../Button/Button";
 
 
-const Ui=({getusers, addUser,findUser})=>{
+const Ui=({getusers, addUser,findUser,usersLength})=>{
         const[passId,setPassId]=useState(1)
 
     const handleSearchChange=(e)=>{
@@ -13,6 +13,7 @@ const Ui=({getusers, addUser,findUser})=>{
         <div className="ui">
             {/*<Button className={'button-ui'} callback={getusers} name='Get Users' />*/}
             <Button className={'button-ui'} callback={addUser} name='Add User' />
+            <div className="users-count"><h3>Users: {usersLength}</h3></div>
             <div className="search-bar">
                  <label htmlFor="findUser">search (Enter passport ID)</label>
                 <div className='search-button'>

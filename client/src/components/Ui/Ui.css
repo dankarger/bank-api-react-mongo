@@ -26,6 +26,10 @@
     gap: 10px;
 }
 
+.users-count {
+    font-size: calc(14px + 1vmin);
+    letter-spacing: 5px;
+}
 @media only screen and (max-width: 600px) {
     .search-button {
         flex-direction: column;

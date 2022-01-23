@@ -1,6 +1,6 @@
-.pop-up {
+.popUp-window{
     background: rgb(40, 44, 52);
-    padding:1rem 2rem 3rem 1rem ;
+    padding:1rem 2rem;
     position: fixed;
     top: 50%;
     left: 50%;

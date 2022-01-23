@@ -295,14 +295,14 @@ function App() {
             <div className='App'>
                 <div className="heading">
                     <h1> Welcome to Bank Manager</h1>
-                    <h2>Users: {users.length}</h2>
+                    {/*<h2>Users: {users.length}</h2>*/}
                 </div>
                 <div className="error-div">
                     {errorMessage}
                 </div>
                 <div>
                 </div>
-                <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser}/>
+                <Ui getusers={getReq} addUser={addUser} findUser={handleFindUser} usersLength={users.length}/>
                 <div>
                     {/*<ListTable />*/}
                     {showFindUser()}
