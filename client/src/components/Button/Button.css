@@ -41,6 +41,7 @@ button, h1, h2 {
     transition: 200ms ease-in-out;
     padding:2px 5px;
     cursor: pointer;
+    width: 100px;
 }
 .show-user-button:hover {
     transform: translateX(  20px);

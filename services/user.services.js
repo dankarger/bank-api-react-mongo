@@ -2,23 +2,22 @@ const User = require("../models/user.model");
 
 const getUsers = async ()=> {
     const data =  await User.find();
-    console.log('data',data)
-    return data
+    return (data)
 }
 
 const addUser = async (req, res) => {
     const user = await User.create(req.body)
-    return user
+    return (user)
 }
 
 const getUser = async (passId) => {
     const user = await User.findOne({passId: passId})
-    return user
+    return (user)
 }
 
 const getActiveUsers = async () => {
     const users = await User.where("isActive").equals("true");
-    return users
+    return (users)
 }
 
 const deleteUser = async (id) => {
@@ -28,13 +27,13 @@ const deleteUser = async (id) => {
 
 const deleteAllUsers = async () => {
     const user = await User.deleteMany({})
-    return user;
+    return (user);
 }
 
 const editUser = async (id, user ) => {
     const updatedUser = await User.findByIdAndUpdate({ _id: id }, { $set: { "details.discount": discount }}, { new: true })
     // const updatedUser = await User.replaceOne({_id: id}, {user});
-    return updatedUser
+    return (updatedUser)
 }
 
 
