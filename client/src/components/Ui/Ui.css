@@ -2,6 +2,8 @@
     /*width: 100%;*/
     height:fit-content;
     background: rgba(25, 81, 176, 0.5);
+    background: rgb(142, 162, 142);
+
     padding:1rem;
     display: flex;
     justify-content: space-around;
@@ -22,4 +24,13 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .search-button {
+        flex-direction: column;
+    }
+    .ui label {
+        font-size: calc(10px + 1vmin);
+    }
 }
