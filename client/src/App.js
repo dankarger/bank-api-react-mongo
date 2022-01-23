@@ -61,7 +61,8 @@ function App() {
                     credit: newUser.credit,
                     isActive: newUser.active === true ? "true" : "false"
                 })
-            setIsFormOpen(!isFormOpen)
+            setIsFormOpen(!isFormOpen);
+        setRenderPage(!renderPage);
         } catch (e) {
             console.log({e});
             setErrorMessage(e.response.data.message)
@@ -218,7 +219,7 @@ function App() {
                                 <p className="item">Pass ID: <span>{user.passId}</span></p>
                                 <p className="item">Cash: <span>{user.cash}</span></p>
                                 <p className="item">Credit: <span>{user.credit}</span></p>
-                                <p className="item">Active: <span>{user.active}</span></p>
+                                {/*<p className="item">Active: <span>{user.active}</span></p>*/}
                             </div>
                             <div className="buttons-div">
                                 <Button className={'show-user-button'} name="Withdraw" callback={() => handleWithdraw(user.passId)}/>

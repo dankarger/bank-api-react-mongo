@@ -13,7 +13,7 @@ const getUsers = async function (req, res) {
 
 const getUser = async function (req, res) {
     try {
-        if(req.params.passId<0) { return Error('Error passPort ') }
+        if(req.params.passId<0) { throw new Error('Error passPort ') }
         const user = await UserService.getUser(req.params.passId);
         console.log('find', user)
         res.status(200).send(user);
@@ -24,11 +24,21 @@ const getUser = async function (req, res) {
 
 const addUser = async function (req, res) {
     try {
+        // if(await UserService.getUser(req.params.passId)) throw new Error('User all ready exist')
+        // if(!req.body.name) throw new Error('Must enter Name');
+        // if(!req.body.passId) throw new Error('Must enter Passport Id');
+        // if(!req.body.cash) throw new Error('Must enter Cash amount');
+        // if(!req.body.credit) throw new Error('Must enter Credit amount')
+        utils.checkBodyRequest(req);
         const users = await UserService.addUser(req, res);
         console.log('user-add', users)
         res.status(200).send(users);
     } catch (e) {
-        res.status(400).json({message: e.message})
+        console.log('e',e)
+        if(e.message.includes('E11000')){
+            res.status(400).send({message:'Error - passPort ID all ready exist in the bank '})
+        }
+        res.status(400).send({message: e.message})
     }
 }
 

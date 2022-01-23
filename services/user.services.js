@@ -69,7 +69,8 @@ const filterUsers = async (min, max) => {
 }
 
 const addCredit = async (passId, amount) => {
-    const user = await User.findOneAndUpdate({passId : passId}, {$inc : {credit: amount}})
+    // const user = await User.findOneAndUpdate({passId : passId}, {$inc : {credit: amount}})
+    let user= await User.findOne({passId:passId})
     return user
 }
 
