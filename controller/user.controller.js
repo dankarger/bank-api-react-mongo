@@ -15,7 +15,6 @@ const getUser = async function (req, res) {
     try {
         if(req.params.passId<0) { throw new Error('Error passPort ') }
         const user = await UserService.getUser(req.params.passId);
-        console.log('find', user)
         res.status(200).send(user);
     } catch (e) {
         res.status(400).json({message: 'User not found'})
@@ -26,7 +25,6 @@ const addUser = async function (req, res) {
     try {
         utils.checkBodyRequest(req);
         const users = await UserService.addUser(req, res);
-        console.log('user-add', users)
         res.status(200).send(users);
     } catch (e) {
         console.log('e',e)
@@ -39,7 +37,6 @@ const addUser = async function (req, res) {
 
 const deleteUser = async function (req, res) {
     try {
-        console.log('req', req.params.id)
         const deleteUser = await UserService.deleteUser(req.params.id);
         res.status(200).send(deleteUser);
     } catch (e) {
